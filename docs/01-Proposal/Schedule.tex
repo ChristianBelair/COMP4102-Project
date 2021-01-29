@@ -6,15 +6,20 @@
     \centering
     \rowcolors{2}{blue!20}{white}
     \setlength\arrayrulewidth{1pt}
-    \begin{tabularx}{\textwidth}{|l|X|}
+    \begin{tabularx}{\textwidth}{|lX|}
         \hline
-        \rowcolor{blue!15}
-        \multicolumn{1}{|c|}{\textbf{Week}}&\multicolumn{1}{c|}{\textbf{Task Summary}}\\
+        \rowcolor{blue!50!black}
+        \multicolumn{1}{|c}{
+            % Yeah it's a hack I know
+            {\vphantom{\huge a}}
+            \large\textbf{\color{white}Week}
+            }
+        &\multicolumn{1}{c|}{\large\textbf{\color{white}Task Summary}}\\
         \hline
         Week 1 & 
         {
             \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
+                \textbf{Adam} & a,b,c \\
                 \textbf{Christian} & a,b,c \\
                 \textbf{Conner} & Preliminary research, scope out papers in area\\
             \end{tabularx}

@@ -6,12 +6,35 @@ The primary goals for this project is to create a suite of car safety features w
 The three main safety features involves gaze tracking, road sign and traffic light detection, and pedestrian detection.
 Each play a role in distracted driving incidents where a driver's gaze might not be focused on a pedestrian, road signs, or traffic lights when a driver should be.
 
-\subsection{Evaluation}
-
-Each of the main components 
-
 \subsection{Stretch Goals}
 
 The primary stretch goal for us to add an interaction between the modules.
 As a proof of concept, we would implement a system to ensure a driver has actually looked in the direction of a pedestrian or sign.
 An additional goal would be to validate it running on a Raspberry Pi Zero as a proof it can be embedded into an actually.
+
+\subsection{Evaluation}
+
+As this system is made up of many components, each element must be evaluated individually for success.
+\begin{itemize}
+    \item Gaze Tracking
+        \begin{itemize}
+            \item 
+        \end{itemize}
+    \item Pedestrian Tracking
+        \begin{itemize}
+            \item 
+        \end{itemize}
+    \item Road Sign Tracking
+        \begin{itemize}
+            \item Accuracy: 80\% of signs correctly detected
+            \item Be able to detect a sign in <500ms after appearing in frame
+        \end{itemize}
+    \item Raspberry Pi Port
+        \begin{itemize}
+            \item All targets must still be met when running the code on a Raspberry Pi Zero
+        \end{itemize}
+    \item Module Interaction
+        \begin{itemize}
+            \item Using the pedestrian or sign tracking, the system can detect if the driver has looked in the direction of the detected object after 5 seconds.
+        \end{itemize}
+\end{itemize}

@@ -1,109 +1,105 @@
 \section{Schedule for Completion}
 Generally speaking, this project is split into 3 sub-projects for gaze tracking, pedestrian tracking, and road sign tracking. These 3 components will be developed seperately; however, near the end they will all be integrated together into a comprehensive suite of computer vision technologies to aid with automotive safety. 
 
-%\the\textwidth
-\begin{table}[H]
-    \centering
-    \rowcolors{2}{blue!20}{white}
-    \setlength\arrayrulewidth{1pt}
-    \begin{tabularx}{\textwidth}{|lX|}
-        \hline
-        \rowcolor{blue!50!black}
-        \multicolumn{1}{|c}{
-            % Yeah it's a hack I know
-            {\vphantom{\huge a}}
-            \large\textbf{\color{white}Week}
-            }
-        &\multicolumn{1}{c|}{\large\textbf{\color{white}Task Summary}}\\
-        \hline
-        Week 1 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\
-                \textbf{Christian} & Finding papers regarding person detection \\
-                \textbf{Conner} & Preliminary research, scope out papers in eye tracking\\
-            \end{tabularx}
-        }\\
-        Week 2 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Design structure of pedestrian tracking component, identify necessary components\\
-                \textbf{Conner} & Scaffold project structure, determine entities related to task, build a common object model\\
-            \end{tabularx}
-        }\\
-        Week 3 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Begin implementing pedestrian tracking, gather test data\\
-                \textbf{Conner} & Begin implementing eye tracking, gather test data\\
-            \end{tabularx}
-        }\\
-        Week 4 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Continue implementing pedestrian tracking, use test data to establish a base line\\
-                \textbf{Conner} & Continue implementing eye tracking, integrate with test data to establish a test bed\\
-            \end{tabularx}
-        }\\
-        Week 5 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Finish implementing pedestrian tracking, start creating API to work with pedestrian tracking data\\
-                \textbf{Conner} & Finish implementing eye tracking, provide a high-level API for working with eye tracking functionality\\
-            \end{tabularx}
-        }\\
-        Week 6 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Begin testing pedestrian tracking, gather accuracy data, improve implementation\\
-                \textbf{Conner} & Perform testing, gather result data for tracking accuracy, determine edge cases, make improvements where applicable\\
-            \end{tabularx}
-        }\\
-        Week 7 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Integrate pedestrian tracking API with main application, create UI in main application to interface with API\\
-                \textbf{Conner} & Integrate high-level API with main car safety application, begin making UI for working with feature\\
-            \end{tabularx}
-        }\\
-        Week 8 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Complete UI for pedestrian tracking API\\
-                \textbf{Conner} & Finsih UI for interacting with feature, build notifications \\
-            \end{tabularx}
-        }\\
-        Week 9 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Continue week 8 work \\
-                \textbf{Conner} & Continue week 8 work \\
-            \end{tabularx}
-        }\\
-        Week 10 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Help work on strech goals / rasberry pi port, help prep for final demo \\
-                \textbf{Conner} & Work on strech goals / rasberry pi port, prep for final demo\\
-            \end{tabularx}
-        }\\
-        Week 11 & 
-        {
-            \begin{tabularx}{\linewidth}{lX}
-                \textbf{Adam} & a,b,c \\ 
-                \textbf{Christian} & Help package final deliverables and continue prepping for final demo \\
-                \textbf{Conner} & Package final deliverables and perform demo\\
-            \end{tabularx}
-        }\\
-        \hline
-    \end{tabularx}
-\end{table}
+\rowcolors{2}{blue!20}{white}
+\setlength\arrayrulewidth{1pt}
+\begin{xltabular}{\textwidth}{|lX|}
+    \hline
+    \rowcolor{blue!50!black}
+    \multicolumn{1}{|c}{
+        % Yeah it's a hack I know
+        {\vphantom{\huge a}}
+        \large\textbf{\color{white}Week}
+        }
+    &\multicolumn{1}{c|}{\large\textbf{\color{white}Task Summary}}\\
+    \hline
+    Week 1 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Early research regarding sign, number, and word detection \\
+            \textbf{Christian} & Finding papers regarding person detection \\
+            \textbf{Conner} & Preliminary research, scope out papers in eye tracking\\
+        \end{tabularx}
+    }\\
+    Week 2 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Finalize theory for implementation \\ 
+            \textbf{Christian} & Design structure of pedestrian tracking component, identify necessary components\\
+            \textbf{Conner} & Scaffold project structure, determine entities related to task, build a common object model\\
+        \end{tabularx}
+    }\\
+    Week 3 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Begin implementing sign detection \\ 
+            \textbf{Christian} & Begin implementing pedestrian tracking, gather test data\\
+            \textbf{Conner} & Begin implementing eye tracking, gather test data\\
+        \end{tabularx}
+    }\\
+    Week 4 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Continue implementing sign tracking, begin testing \\ 
+            \textbf{Christian} & Continue implementing pedestrian tracking, use test data to establish a base line\\
+            \textbf{Conner} & Continue implementing eye tracking, integrate with test data to establish a test bed\\
+        \end{tabularx}
+    }\\
+    Week 5 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Finalize initial sign tracking, begin building API to work with tracking data \\ 
+            \textbf{Christian} & Finish implementing pedestrian tracking, start creating API to work with pedestrian tracking data\\
+            \textbf{Conner} & Finish implementing eye tracking, provide a high-level API for working with eye tracking functionality\\
+        \end{tabularx}
+    }\\
+    Week 6 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Begin testing and optimizing sign tracking \\ 
+            \textbf{Christian} & Begin testing pedestrian tracking, gather accuracy data, improve implementation\\
+            \textbf{Conner} & Perform testing, gather result data for tracking accuracy, determine edge cases, make improvements where applicable\\
+        \end{tabularx}
+    }\\
+    Week 7 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Integrate API with main application \\ 
+            \textbf{Christian} & Integrate pedestrian tracking API with main application, create UI in main application to interface with API\\
+            \textbf{Conner} & Integrate high-level API with main car safety application, begin making UI for working with feature\\
+        \end{tabularx}
+    }\\
+    Week 8 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Continue UI for sign tracking \\ 
+            \textbf{Christian} & Complete UI for pedestrian tracking API\\
+            \textbf{Conner} & Finsih UI for interacting with feature, build notifications \\
+        \end{tabularx}
+    }\\
+    Week 9 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Finalize sign tracking integration and begin real world testing \\ 
+            \textbf{Christian} & Continue week 8 work \\
+            \textbf{Conner} & Continue week 8 work \\
+        \end{tabularx}
+    }\\
+    Week 10 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Work on stretch goals, prep for final demo \\ 
+            \textbf{Christian} & Help work on strech goals / rasberry pi port, help prep for final demo \\
+            \textbf{Conner} & Work on strech goals / rasberry pi port, prep for final demo\\
+        \end{tabularx}
+    }\\
+    Week 11 & 
+    {
+        \begin{tabularx}{\linewidth}{lX}
+            \textbf{Adam} & Finalize and package project \\ 
+            \textbf{Christian} & Help package final deliverables and continue prepping for final demo \\
+            \textbf{Conner} & Package final deliverables and perform demo\\
+        \end{tabularx}
+    }\\
+    \hline
+\end{xltabular}

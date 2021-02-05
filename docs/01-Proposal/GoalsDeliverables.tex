@@ -18,7 +18,8 @@ As this system is made up of many components, each element must be evaluated ind
 \begin{itemize}
     \item Gaze Tracking
         \begin{itemize}
-            \item 
+            \item Accuracy: Must be able to differentiate between different eye states and edge cases (eye direction, eyelids open/closed) with $80\%$ success rate
+            \item Must be able to give near real-time feedback on eye states, as these will be used by the safety system.
         \end{itemize}
     \item Pedestrian Tracking
         \begin{itemize}
@@ -39,3 +40,5 @@ As this system is made up of many components, each element must be evaluated ind
             \item Using the pedestrian or sign tracking, the system can detect if the driver has looked in the direction of the detected object after 5 seconds.
         \end{itemize}
 \end{itemize}
+
+Each component will be evaluated using a test framework of mock video footage in a variety of scenarios and edge cases. The video footage will have timestamps and other metadata regarding certain events, thus we can correlate a time delta between when an event happened and when a given component registered that event.

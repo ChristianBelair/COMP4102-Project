@@ -5,7 +5,7 @@
 ########################################################
 cmake_minimum_required(VERSION 3.5)
 
-project(EdgeDetection LANGUAGES CXX)
+project(AutomotiveSafetySuite LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

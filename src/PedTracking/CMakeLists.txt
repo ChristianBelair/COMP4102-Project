@@ -12,5 +12,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
-add_executable(EyeTrackTest EyeTracking/EyeTrackingTest.cpp)
-target_link_libraries( EyeTrackTest ${OpenCV_LIBS} )
+add_executable(PedTrackTest PedTrackingTest.cpp)
+target_link_libraries( PedTrackTest ${OpenCV_LIBS} )

@@ -23,7 +23,7 @@ void ass::PedTracking::VideoTest(std::string vFile) {
     cv::VideoCapture cap;
 
     if(!cap.open(vFile)) {
-        std::cout << "NO CAM 4 U" << std::endl;
+        std::cout << "NO VID 4 U" << std::endl;
     }
 
     while(true) {

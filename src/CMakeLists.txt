@@ -14,3 +14,8 @@ find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 add_executable(EyeTrackTest EyeTracking/EyeTrackingTest.cpp)
 target_link_libraries( EyeTrackTest ${OpenCV_LIBS} )
+
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable(PedTrackTest PedTracking/PedTrackingTest.cpp)
+target_link_libraries( PedTracking ${OpenCV_LIBS} )

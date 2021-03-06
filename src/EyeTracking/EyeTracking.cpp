@@ -5,7 +5,7 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
-#include "./EyeTracking.hpp"
+#include "EyeTracking.h"
 
 void ass::EyeTracking::VideoTest() {
     VideoTest(0);

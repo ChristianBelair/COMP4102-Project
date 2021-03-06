@@ -8,18 +8,19 @@
 #include <QPushButton>
 #include <QMainWindow>
 #include <QComboBox>
+#include "ui_cameraview.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Camera; }
+namespace Ui { class CameraView; }
 QT_END_NAMESPACE
 
 
-class Camera : public QMainWindow
+class CameraView : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    Camera();
+    CameraView();
 
 private slots:
     void setCamera(const QCameraInfo &cameraInfo);
@@ -60,6 +61,8 @@ private slots:
     void applySettings();
     QVariant getCBValue(const QComboBox *box) const;
 
+    void showHelp();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
@@ -67,10 +70,9 @@ protected:
     void refreshSettings(QScopedPointer<QMediaRecorder> &recorder);
 
 private:
-    Ui::Camera *ui;
+    Ui_CameraView *ui;
 
     QScopedPointer<QCamera> m_camera;
-    QScopedPointer<QCameraImageCapture> m_imageCapture;
     QScopedPointer<QMediaRecorder> m_mediaRecorder;
 
     QImageEncoderSettings m_imageSettings;

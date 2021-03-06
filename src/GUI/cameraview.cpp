@@ -1,24 +1,21 @@
-#include "camera.h"
 #include <chrono>
 #include <thread>
 #include <iostream>
-#include "camera.h"
-#include "ui_camera.h"
-
 #include <QMediaService>
 #include <QMediaRecorder>
 #include <QCameraViewfinder>
 #include <QCameraInfo>
 #include <QMediaMetaData>
-
 #include <QMessageBox>
 #include <QPalette>
-
 #include <QtWidgets>
+
+#include "cameraview.h"
+#include "userhelpdialog.h"
 
 Q_DECLARE_METATYPE(QCameraInfo)
 
-Camera::Camera() : ui(new Ui::Camera)
+CameraView::CameraView() : ui(new Ui::CameraView)
 {
     ui->setupUi(this);
 
@@ -30,14 +27,24 @@ Camera::Camera() : ui(new Ui::Camera)
     connect(ui->cameraComboBox, SIGNAL(activated(int)), this, SLOT(updateCameraDevice(int)));
     setCamera(QCameraInfo::defaultCamera());
 
-    connect(ui->buttApply, &QPushButton::released, this, &Camera::applySettings);
-    connect(ui->buttPlay, &QPushButton::released, this, &Camera::startCamera);
-    connect(ui->buttPause, &QPushButton::released, this, &Camera::stopCamera);
+    connect(ui->buttApply, &QPushButton::released, this, &CameraView::applySettings);
+    connect(ui->buttPlay, &QPushButton::released, this, &CameraView::startCamera);
+    connect(ui->buttPause, &QPushButton::released, this, &CameraView::stopCamera);
 
     ui->buttPlay->setHidden(true);
+
+    connect(ui->buttHelp, &QPushButton::released, this, &CameraView::showHelp);
 }
 
-void Camera::refreshSettings(QScopedPointer<QMediaRecorder> &recorder)
+void CameraView::showHelp() {
+    UserHelpDialog helpDialog;
+    helpDialog.setWindowFlags(helpDialog.windowFlags() & ~ Qt::WindowContextHelpButtonHint);
+    helpDialog.setModal(true);
+    helpDialog.exec();
+    helpDialog.show();
+}
+
+void CameraView::refreshSettings(QScopedPointer<QMediaRecorder> &recorder)
 {
     std::cout << "refresh settings" << std::endl;
 
@@ -61,7 +68,7 @@ void Camera::refreshSettings(QScopedPointer<QMediaRecorder> &recorder)
 }
 
 
-void Camera::applySettings() {
+void CameraView::applySettings() {
     std::cout << "apply settings" << std::endl;
 
     // Pull settings from the boxes
@@ -72,46 +79,38 @@ void Camera::applySettings() {
     m_mediaRecorder->setEncodingSettings(m_mediaRecorder->audioSettings(), settings);
 }
 
-QVariant Camera::getCBValue(const QComboBox *box) const {
+QVariant CameraView::getCBValue(const QComboBox *box) const {
     int selected = box->currentIndex();
     return box->itemData(selected);
 }
 
-void Camera::setCamera(const QCameraInfo &cameraInfo)
+void CameraView::setCamera(const QCameraInfo &cameraInfo)
 {
     std::cout << "Set camera event " << std::endl;
     m_camera.reset(new QCamera(cameraInfo));
 
-    connect(m_camera.data(), &QCamera::stateChanged, this, &Camera::updateCameraState);
-    connect(m_camera.data(), QOverload<QCamera::Error>::of(&QCamera::error), this, &Camera::displayCameraError);
+    //connect(m_camera.data(), &QCamera::stateChanged, this, &Camera::updateCameraState);
+    //connect(m_camera.data(), QOverload<QCamera::Error>::of(&QCamera::error), this, &Camera::displayCameraError);
 
     m_mediaRecorder.reset(new QMediaRecorder(m_camera.data()));
-    connect(m_mediaRecorder.data(), &QMediaRecorder::stateChanged, this, &Camera::updateRecorderState);
+    //connect(m_mediaRecorder.data(), &QMediaRecorder::stateChanged, this, &Camera::updateRecorderState);
 
-    m_imageCapture.reset(new QCameraImageCapture(m_camera.data()));
-
-    connect(m_mediaRecorder.data(), &QMediaRecorder::durationChanged, this, &Camera::updateRecordTime);
-    connect(m_mediaRecorder.data(), QOverload<QMediaRecorder::Error>::of(&QMediaRecorder::error),
-            this, &Camera::displayRecorderError);
+    //connect(m_mediaRecorder.data(), &QMediaRecorder::durationChanged, this, &Camera::updateRecordTime);
+    //connect(m_mediaRecorder.data(), QOverload<QMediaRecorder::Error>::of(&QMediaRecorder::error),
+      //      this, &Camera::displayRecorderError);
 
     m_mediaRecorder->setMetaData(QMediaMetaData::Title, QVariant(QLatin1String("Test Title")));
 
-    connect(ui->exposureCompensation, &QAbstractSlider::valueChanged, this, &Camera::setExposureCompensation);
+    //connect(ui->exposureCompensation, &QAbstractSlider::valueChanged, this, &Camera::setExposureCompensation);
 
-    m_camera->setViewfinder(ui->viewfinder);
+    m_camera->setViewfinder(ui->viewfinder->videoSurface());
 
     updateCameraState(m_camera->state());
     updateLockStatus(m_camera->lockStatus(), QCamera::UserRequest);
     updateRecorderState(m_mediaRecorder->state());
 
-    connect(m_imageCapture.data(), &QCameraImageCapture::readyForCaptureChanged, this, &Camera::readyForCapture);
-    connect(m_imageCapture.data(), &QCameraImageCapture::imageCaptured, this, &Camera::processCapturedImage);
-    connect(m_imageCapture.data(), &QCameraImageCapture::imageSaved, this, &Camera::imageSaved);
-    connect(m_imageCapture.data(), QOverload<int, QCameraImageCapture::Error, const QString &>::of(&QCameraImageCapture::error),
-            this, &Camera::displayCaptureError);
-
     connect(m_camera.data(), QOverload<QCamera::LockStatus, QCamera::LockChangeReason>::of(&QCamera::lockStatusChanged),
-            this, &Camera::updateLockStatus);
+            this, &CameraView::updateLockStatus);
 
     //ui->captureWidget->setTabEnabled(0, (m_camera->isCaptureModeSupported(QCamera::CaptureStillImage)));
     //ui->captureWidget->setTabEnabled(1, (m_camera->isCaptureModeSupported(QCamera::CaptureVideo)));
@@ -121,7 +120,7 @@ void Camera::setCamera(const QCameraInfo &cameraInfo)
     refreshSettings(m_mediaRecorder);
 }
 
-void Camera::keyPressEvent(QKeyEvent * event)
+void CameraView::keyPressEvent(QKeyEvent * event)
 {
     if (event->isAutoRepeat())
         return;
@@ -148,7 +147,7 @@ void Camera::keyPressEvent(QKeyEvent * event)
     }
 }
 
-void Camera::keyReleaseEvent(QKeyEvent *event)
+void CameraView::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
         return;
@@ -162,13 +161,13 @@ void Camera::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void Camera::updateRecordTime()
+void CameraView::updateRecordTime()
 {
     QString str = QString("Recorded %1 sec").arg(m_mediaRecorder->duration()/1000);
     ui->statusbar->showMessage(str);
 }
 
-void Camera::processCapturedImage(int requestId, const QImage& img)
+void CameraView::processCapturedImage(int requestId, const QImage& img)
 {
     Q_UNUSED(requestId);
     QImage scaledImage = img.scaled(ui->viewfinder->size(),
@@ -179,31 +178,31 @@ void Camera::processCapturedImage(int requestId, const QImage& img)
 
     // Display captured image for 4 seconds.
     displayCapturedImage();
-    QTimer::singleShot(4000, this, &Camera::displayViewfinder);
+    QTimer::singleShot(4000, this, &CameraView::displayViewfinder);
 }
 
-void Camera::record()
+void CameraView::record()
 {
     m_mediaRecorder->record();
     updateRecordTime();
 }
 
-void Camera::pause()
+void CameraView::pause()
 {
     m_mediaRecorder->pause();
 }
 
-void Camera::stop()
+void CameraView::stop()
 {
     m_mediaRecorder->stop();
 }
 
-void Camera::setMuted(bool muted)
+void CameraView::setMuted(bool muted)
 {
     m_mediaRecorder->setMuted(muted);
 }
 
-void Camera::toggleLock()
+void CameraView::toggleLock()
 {
     switch (m_camera->lockStatus()) {
     case QCamera::Searching:
@@ -215,7 +214,7 @@ void Camera::toggleLock()
     }
 }
 
-void Camera::updateLockStatus(QCamera::LockStatus status, QCamera::LockChangeReason reason)
+void CameraView::updateLockStatus(QCamera::LockStatus status, QCamera::LockChangeReason reason)
 {
     QColor indicationColor = Qt::black;
 
@@ -235,13 +234,12 @@ void Camera::updateLockStatus(QCamera::LockStatus status, QCamera::LockChangeRea
     }
 }
 
-void Camera::takeImage()
+void CameraView::takeImage()
 {
     m_isCapturingImage = true;
-    m_imageCapture->capture();
 }
 
-void Camera::displayCaptureError(int id, const QCameraImageCapture::Error error, const QString &errorString)
+void CameraView::displayCaptureError(int id, const QCameraImageCapture::Error error, const QString &errorString)
 {
     Q_UNUSED(id);
     Q_UNUSED(error);
@@ -249,21 +247,21 @@ void Camera::displayCaptureError(int id, const QCameraImageCapture::Error error,
     m_isCapturingImage = false;
 }
 
-void Camera::startCamera()
+void CameraView::startCamera()
 {
     ui->buttPlay->setHidden(true);
     ui->buttPause->setHidden(false);
     m_camera->start();
 }
 
-void Camera::stopCamera()
+void CameraView::stopCamera()
 {
     ui->buttPause->setHidden(true);
     ui->buttPlay->setHidden(false);
     m_camera->stop();
 }
 
-void Camera::updateCaptureMode()
+void CameraView::updateCaptureMode()
 {
     QCamera::CaptureModes captureMode = QCamera::CaptureVideo;
 
@@ -271,7 +269,7 @@ void Camera::updateCaptureMode()
         m_camera->setCaptureMode(captureMode);
 }
 
-void Camera::updateCameraState(QCamera::State state)
+void CameraView::updateCameraState(QCamera::State state)
 {
     switch (state) {
     case QCamera::ActiveState:
@@ -288,49 +286,49 @@ void Camera::updateCameraState(QCamera::State state)
     }
 }
 
-void Camera::updateRecorderState(QMediaRecorder::State state)
+void CameraView::updateRecorderState(QMediaRecorder::State state)
 {
     std::cout << "Update recorder state" << std::endl;
 }
 
-void Camera::setExposureCompensation(int index)
+void CameraView::setExposureCompensation(int index)
 {
     m_camera->exposure()->setExposureCompensation(index*0.5);
 }
 
-void Camera::displayRecorderError()
+void CameraView::displayRecorderError()
 {
     QMessageBox::warning(this, tr("Capture Error"), m_mediaRecorder->errorString());
 }
 
-void Camera::displayCameraError()
+void CameraView::displayCameraError()
 {
     QMessageBox::warning(this, tr("Camera Error"), m_camera->errorString());
 }
 
-void Camera::updateCameraDevice(int index)
+void CameraView::updateCameraDevice(int index)
 {
     std::cout << "UpdateCameraDevice event " << index << std::endl;
     setCamera(qvariant_cast<QCameraInfo>(cameras[index]));
 }
 
-void Camera::displayViewfinder()
+void CameraView::displayViewfinder()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void Camera::displayCapturedImage()
+void CameraView::displayCapturedImage()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void Camera::readyForCapture(bool ready)
+void CameraView::readyForCapture(bool ready)
 {
     //ui->takeImageButton->setEnabled(ready);
     std::cout << "Ready for capture " << ready << std::endl;
 }
 
-void Camera::imageSaved(int id, const QString &fileName)
+void CameraView::imageSaved(int id, const QString &fileName)
 {
     Q_UNUSED(id);
     ui->statusbar->showMessage(tr("Captured \"%1\"").arg(QDir::toNativeSeparators(fileName)));
@@ -340,7 +338,7 @@ void Camera::imageSaved(int id, const QString &fileName)
         close();
 }
 
-void Camera::closeEvent(QCloseEvent *event)
+void CameraView::closeEvent(QCloseEvent *event)
 {
     if (m_isCapturingImage) {
         setEnabled(false);

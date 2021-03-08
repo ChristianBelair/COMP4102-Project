@@ -74,7 +74,7 @@ void ass::PedTracking::TrackPeds(int camera) {
         //     cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
         // }
 
-        cv::imshow("u", frame);
+        cv::imshow("u", img);
         if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;
     }
 }

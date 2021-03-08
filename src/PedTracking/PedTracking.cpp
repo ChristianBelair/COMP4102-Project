@@ -55,7 +55,7 @@ void ass::PedTracking::TrackPeds(int camera) {
         cap >> frame;
 
         cv::Mat img = frame.clone();
-        cv::resize(img, img, cv::Size(img.cols*2, img.rows*2));
+        cv::resize(img, img, cv::Size(640, 480));
 
         std::vector<cv::Rect> found;
         std::vector<double> weights;

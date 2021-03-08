@@ -10,12 +10,6 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/objdetect.hpp>
-#include <opencv4/opencv2/core/utility.hpp>
-#include <opencv4/opencv2/imgproc.hpp>
-#include <opencv4/opencv2/imgcodecs.hpp>
-#include <opencv4/opencv2/highgui.hpp>
-#include <opencv4/opencv2/videoio.hpp>
-#include <opencv4/opencv2/objdetect.hpp>
 
 namespace ass {
     class PedTracking {

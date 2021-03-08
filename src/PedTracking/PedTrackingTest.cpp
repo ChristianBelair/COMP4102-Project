@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     }
 
     if (vFile == "") {
-        pedTracker.VideoTest();
+        pedTracker.TrackPeds();
     }
     else {
         pedTracker.VideoTest(vFile);

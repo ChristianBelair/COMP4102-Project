@@ -9,13 +9,16 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/videoio.hpp>
+#include <opencv2/objdetect.hpp>
 
 namespace ass {
     class PedTracking {
         public:
             void VideoTest();
             void VideoTest(int cameraNumber);
-            void VideoTest(std::string vFile);
+            void VideoTest(std::string video);
+            void TrackPeds(int cameraNumber);
+            void TrackPeds(std::string video);
     };
 }
 

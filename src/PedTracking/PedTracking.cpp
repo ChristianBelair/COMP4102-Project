@@ -19,10 +19,67 @@ void ass::PedTracking::VideoTest(int camera) {
     }
 }
 
-void ass::PedTracking::VideoTest(std::string vFile) {
+void ass::PedTracking::VideoTest(std::string video) {
     cv::VideoCapture cap;
 
-    if(!cap.open(vFile)) {
+    if(!cap.open(video)) {
+        std::cout << "NO VID 4 U" << std::endl;
+    }
+
+    while(true) {
+        cv::Mat frame;
+        cap >> frame;
+        cv::imshow("u", frame);
+        if( cv::waitKey(10) == 27 ) break;
+    }
+}
+
+void ass::PedTracking::TrackPeds(int camera) {
+    cv::VideoCapture cap;
+    cv::Mat frame;
+
+    if(!cap.open(camera)) {
+        std::cout << "Error: Could not open camera." << std::endl;
+    }
+
+    cv::HOGDescriptor hog;
+    hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+
+    std::vector<cv::Point> track;
+
+    while(true) {
+        cap >> frame;
+
+        cv::Mat img = frame.clone();
+        cv::resize(img, img, cv::Size(img.cols*2, img.rows*2));
+
+        std::vector<cv::Rect> found;
+        std::vector<double> weights;
+
+        hog.detectMultiScale(img, found, weights);
+
+        for (int i = 0; i < found.size(); ++i) {
+            cv::Rect r = found[i];
+            cv::rectangle(img, found[i], cv::Scalar(90, 222, 211), 3);
+            std::stringstream tmp;
+            tmp << weights[i];
+            cv::putText(img, tmp.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(90, 222, 211));
+            track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
+        }
+
+        for (int i = 0; i < track.size(); ++i) {
+            cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
+        }
+
+        cv::imshow("u", frame);
+        if( cv::waitKey(1) == 27 ) break;
+    }
+}
+
+void ass::PedTracking::TrackPeds(std::string video) {
+    cv::VideoCapture cap;
+
+    if(!cap.open(video)) {
         std::cout << "NO VID 4 U" << std::endl;
     }
 

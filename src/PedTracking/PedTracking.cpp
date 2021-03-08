@@ -49,12 +49,41 @@ void ass::PedTracking::TrackPeds(int camera) {
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
-    // std::vector<cv::Point> track;
+    std::vector<cv::Point> track;
 
     while(true) {
         cap >> frame;
 
         cv::Mat img = frame.clone();
+
+        std::vector<cv::Rect> found;
+        std::vector<double> weights;
+
+        hog.detectMultiScale(img, found, weights, 0.0, cv::Size(8, 8));
+
+        for (size_t i = 0; i < found.size(); ++i) {
+            cv::Rect r = found[i];
+            cv::rectangle(img, r, cv::Scalar(0, 0, 255), 3);
+            std::ostringstream buf;
+            buf << weights[i];
+            cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255));
+            track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
+        }
+
+        for (size_t i = 0; i < track.size(); ++i) {
+            cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
+        }
+
+        cv::imshow("u", img);
+        if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;
+    }
+}
+
+cv::Mat ass::PedTracking::TrackPeds(cv::Mat frame) {
+    cv::HOGDescriptor hog;
+    hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
+
+    cv::Mat img = frame.clone();
 
         std::vector<cv::Rect> found;
         std::vector<double> weights;
@@ -74,22 +103,5 @@ void ass::PedTracking::TrackPeds(int camera) {
         //     cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
         // }
 
-        cv::imshow("u", img);
-        if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;
-    }
-}
-
-void ass::PedTracking::TrackPeds(std::string video) {
-    cv::VideoCapture cap;
-
-    if(!cap.open(video)) {
-        std::cout << "NO VID 4 U" << std::endl;
-    }
-
-    while(true) {
-        cv::Mat frame;
-        cap >> frame;
-        cv::imshow("u", frame);
-        if( cv::waitKey(10) == 27 ) break;
-    }
+        return img;
 }

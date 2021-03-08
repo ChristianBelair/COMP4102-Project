@@ -19,7 +19,7 @@ namespace ass {
             void VideoTest(std::string video);
             void TrackPeds();
             void TrackPeds(int cameraNumber);
-            void TrackPeds(std::string video);
+            cv::Mat TrackPeds(cv::Mat frame);
     };
 }
 

@@ -62,16 +62,16 @@ void ass::PedTracking::TrackPeds(int camera) {
 
         hog.detectMultiScale(img, found, weights);
 
-        for (int i = 0; i < found.size(); ++i) {
+        for (size_t i = 0; i < found.size(); ++i) {
             cv::Rect r = found[i];
-            cv::rectangle(img, found[i], cv::Scalar(90, 222, 211), 3);
+            cv::rectangle(img, found[i], cv::Scalar(0, 0, 255), 3);
             std::stringstream tmp;
             tmp << weights[i];
-            cv::putText(img, tmp.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(90, 222, 211));
+            cv::putText(img, tmp.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255));
             track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
         }
 
-        for (int i = 0; i < track.size(); ++i) {
+        for (size_t i = 0; i < track.size(); ++i) {
             cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
         }
 

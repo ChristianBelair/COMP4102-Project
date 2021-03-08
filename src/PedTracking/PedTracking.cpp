@@ -34,6 +34,10 @@ void ass::PedTracking::VideoTest(std::string video) {
     }
 }
 
+void ass::PedTracking::TrackPeds() {
+    TrackPeds(0);
+}
+
 void ass::PedTracking::TrackPeds(int camera) {
     cv::VideoCapture cap;
     cv::Mat frame;

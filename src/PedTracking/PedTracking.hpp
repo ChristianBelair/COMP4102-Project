@@ -17,6 +17,7 @@ namespace ass {
             void VideoTest();
             void VideoTest(int cameraNumber);
             void VideoTest(std::string video);
+            void TrackPeds();
             void TrackPeds(int cameraNumber);
             void TrackPeds(std::string video);
     };

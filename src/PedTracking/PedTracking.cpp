@@ -55,7 +55,6 @@ void ass::PedTracking::TrackPeds(int camera) {
         cap >> frame;
 
         cv::Mat img = frame.clone();
-        cv::resize(img, img, cv::Size(640, 480));
 
         std::vector<cv::Rect> found;
         std::vector<double> weights;
@@ -76,7 +75,7 @@ void ass::PedTracking::TrackPeds(int camera) {
         }
 
         cv::imshow("u", frame);
-        if( cv::waitKey(10) == 27 ) break;
+        if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;
     }
 }
 

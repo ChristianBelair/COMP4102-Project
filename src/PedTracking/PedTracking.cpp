@@ -67,7 +67,7 @@ void ass::PedTracking::TrackPeds(int camera) {
             std::ostringstream buf;
             buf << weights[i];
             cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255));
-            track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
+            // track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
         }
 
         // for (size_t i = 0; i < track.size(); ++i) {

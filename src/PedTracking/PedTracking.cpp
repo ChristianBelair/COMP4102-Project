@@ -76,7 +76,7 @@ void ass::PedTracking::TrackPeds(int camera) {
         }
 
         cv::imshow("u", frame);
-        if( cv::waitKey(1) == 27 ) break;
+        if( cv::waitKey(10) == 27 ) break;
     }
 }
 

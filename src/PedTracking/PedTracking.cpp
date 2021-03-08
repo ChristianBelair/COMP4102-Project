@@ -49,7 +49,7 @@ void ass::PedTracking::TrackPeds(int camera) {
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
-    std::vector<cv::Point> track;
+    // std::vector<cv::Point> track;
 
     while(true) {
         cap >> frame;
@@ -63,16 +63,16 @@ void ass::PedTracking::TrackPeds(int camera) {
 
         for (size_t i = 0; i < found.size(); ++i) {
             cv::Rect r = found[i];
-            cv::rectangle(img, found[i], cv::Scalar(0, 0, 255), 3);
-            std::stringstream tmp;
-            tmp << weights[i];
-            cv::putText(img, tmp.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255));
+            cv::rectangle(img, r, cv::Scalar(0, 0, 255), 3);
+            std::ostringstream buf;
+            buf << weights[i];
+            cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255));
             track.push_back(cv::Point(found[i].x + found[i].width / 2, found[i].y + found[i].height / 2));
         }
 
-        for (size_t i = 0; i < track.size(); ++i) {
-            cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
-        }
+        // for (size_t i = 0; i < track.size(); ++i) {
+        //     cv::line(img, track[i + 1], track[i], cv::Scalar(255, 255, 0), 2);
+        // }
 
         cv::imshow("u", frame);
         if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;

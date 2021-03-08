@@ -60,7 +60,7 @@ void ass::PedTracking::TrackPeds(int camera) {
         std::vector<cv::Rect> found;
         std::vector<double> weights;
 
-        hog.detectMultiScale(img, found, weights);
+        hog.detectMultiScale(img, found, weights, 0.0, cv::Size(8, 8));
 
         for (size_t i = 0; i < found.size(); ++i) {
             cv::Rect r = found[i];

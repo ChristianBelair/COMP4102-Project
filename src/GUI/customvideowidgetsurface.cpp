@@ -20,9 +20,7 @@ namespace Ui {
     QList<QVideoFrame::PixelFormat> CustomVideoWidgetSurface::supportedPixelFormats(
             QAbstractVideoBuffer::HandleType handleType) const
     {
-        if (handleType == QAbstractVideoBuffer::NoHandle) {
-            std::cout << "BOO" << std::endl;
-            return QList<QVideoFrame::PixelFormat>()
+        if (handleType == QAbstractVideoBuffer::NoHandle) {            return QList<QVideoFrame::PixelFormat>()
                     << QVideoFrame::Format_RGB32
                     << QVideoFrame::Format_ARGB32
                     << QVideoFrame::Format_ARGB32_Premultiplied
@@ -30,7 +28,6 @@ namespace Ui {
                     << QVideoFrame::Format_RGB555
                     << QVideoFrame::Format_ABGR32;
         } else {
-
             return QList<QVideoFrame::PixelFormat>();
         }
     }
@@ -78,6 +75,7 @@ namespace Ui {
 
     bool CustomVideoWidgetSurface::present(const QVideoFrame &frame)
     {
+        std::cout << "Present tick " << std::endl;
         if (surfaceFormat().pixelFormat() != frame.pixelFormat()
                 || surfaceFormat().frameSize() != frame.size()) {
             setError(IncorrectFormatError);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Camera</class>
- <widget class="QMainWindow" name="Camera">
+ <class>CameraView</class>
+ <widget class="QMainWindow" name="CameraView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -20,8 +20,8 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" rowspan="4">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -98,8 +98,18 @@
       </property>
       <widget class="QWidget" name="viewfinderPage">
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="1">
-         <widget class="QCameraViewfinder" name="viewfinder" native="true"/>
+        <item row="0" column="0">
+         <widget class="Ui::CustomVideoWidget" name="viewfinder" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -125,7 +135,7 @@
       </widget>
      </widget>
     </item>
-    <item>
+    <item row="3" column="1">
      <widget class="QGroupBox" name="groupBox">
       <property name="minimumSize">
        <size>
@@ -138,25 +148,70 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="3" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Resolution:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Camera Device</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QSlider" name="exposureCompensation">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QPushButton" name="buttApply">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Apply Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QComboBox" name="code"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Video Codec:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QComboBox" name="framerateBox"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QComboBox" name="cameraComboBox"/>
+       </item>
+       <item row="4" column="0">
         <widget class="QComboBox" name="resolutionBox"/>
        </item>
        <item row="5" column="0">
-        <widget class="QComboBox" name="framerateBox"/>
-       </item>
-       <item row="10" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Framerate:</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
-       <item row="12" column="0">
+       <item row="13" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <spacer name="horizontalSpacer">
@@ -187,7 +242,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="camera.qrc">
+            <iconset resource="cameraview.qrc">
              <normaloff>:/images/stop-24px.svg</normaloff>:/images/stop-24px.svg</iconset>
            </property>
            <property name="iconSize">
@@ -214,7 +269,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="camera.qrc">
+            <iconset resource="cameraview.qrc">
              <normaloff>:/images/play_circle-24px.svg</normaloff>:/images/play_circle-24px.svg</iconset>
            </property>
            <property name="iconSize">
@@ -243,73 +298,52 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Resolution:</string>
+       <item row="11" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QComboBox" name="code"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Framerate:</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-        </widget>
+        </spacer>
        </item>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="cameraComboBox"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Video Codec:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Exposure</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Camera Device</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QSlider" name="exposureCompensation">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
-        <widget class="QPushButton" name="buttApply">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Apply Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="0">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="buttHelp">
+        <property name="text">
+         <string>Help</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -344,84 +378,24 @@
     <string>Settings</string>
    </property>
   </action>
+  <action name="actionShow_Help">
+   <property name="text">
+    <string>Show Help</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QCameraViewfinder</class>
+   <class>Ui::CustomVideoWidget</class>
    <extends>QWidget</extends>
-   <header>qcameraviewfinder.h</header>
+   <header>GUI/customvideowidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="camera.qrc"/>
+  <include location="cameraview.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>actionExit</sender>
-   <signal>triggered()</signal>
-   <receiver>Camera</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>154</x>
-     <y>130</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSettings</sender>
-   <signal>triggered()</signal>
-   <receiver>Camera</receiver>
-   <slot>configureCaptureSettings()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionStartCamera</sender>
-   <signal>triggered()</signal>
-   <receiver>Camera</receiver>
-   <slot>startCamera()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionStopCamera</sender>
-   <signal>triggered()</signal>
-   <receiver>Camera</receiver>
-   <slot>stopCamera()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>210</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>record()</slot>
   <slot>pause()</slot>

@@ -1,4 +1,8 @@
-#include "./PedTracking.hpp"
+#include "./PedTracking.h"
+
+ass::PedTracking::PedTracking() {
+
+}
 
 void ass::PedTracking::VideoTest() {
     VideoTest(0);
@@ -52,7 +56,7 @@ void ass::PedTracking::TrackPeds(int camera) {
     while(true) {
         cap >> frame;
 
-        cv::Mat img = TrackPeds(frame);
+        cv::Mat img = PedTrackingPipeline(frame);
 
         // cv::Mat img = frame.clone();
 
@@ -74,7 +78,7 @@ void ass::PedTracking::TrackPeds(int camera) {
     }
 }
 
-cv::Mat ass::PedTracking::TrackPeds(cv::Mat frame) {
+cv::Mat ass::PedTracking::PedTrackingPipeline(cv::Mat frame) {
     cv::HOGDescriptor hog;
     hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 

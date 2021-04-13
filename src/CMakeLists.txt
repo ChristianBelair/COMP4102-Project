@@ -44,12 +44,16 @@ file(GLOB GUI_SRC ${PROJECT_SOURCE_DIR}/GUI/*)
 # Grab shared sources
 file(GLOB SHARED_SRC ${PROJECT_SOURCE_DIR}/shared/*.cpp ${PROJECT_SOURCE_DIR}/shared/*.h)
 
+# Grab Pedtracking source files
+file(GLOB PEDTRACK_SRC ${PROJECT_SOURCE_DIR}/PedTracking/*cpp ${PROJECT_SOURCE_DIR}/PedTracking/*.h)
+
 set(PROJECT_SOURCES
         main.cpp
         ${GUI_SRC}
         ${SHARED_SRC}
         ${EYETRACK_SRC}
         ${EYETRACK_LIBS}
+        ${PEDTRACK_SRC}
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS GUI)

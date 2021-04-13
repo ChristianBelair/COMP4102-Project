@@ -14,12 +14,13 @@
 namespace ass {
     class PedTracking {
         public:
+            PedTracking();
             void VideoTest();
             void VideoTest(int cameraNumber);
             void VideoTest(std::string video);
             void TrackPeds();
             void TrackPeds(int cameraNumber);
-            cv::Mat TrackPeds(cv::Mat frame);
+            cv::Mat PedTrackingPipeline(cv::Mat frame);
     };
 }
 

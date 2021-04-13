@@ -5,6 +5,7 @@
 #include <string>
 #include "cvmatandqimage.h"
 #include "EyeTracking/EyeTracking.h"
+#include "PedTracking/PedTracking.h"
 
 namespace ass {
     class ImagePipeline
@@ -16,6 +17,7 @@ namespace ass {
 
     private:
         EyeTracking eyeTracker;
+        PedTracking pedTracker;
     };
 }
 

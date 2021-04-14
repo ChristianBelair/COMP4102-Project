@@ -100,13 +100,12 @@
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
          <widget class="Ui::CustomVideoWidget" name="viewfinder" native="true">
-          <property name="autoFillBackground">
-           <bool>true</bool>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="Ui::CustomVideoWidget" name="viewfinder_2" native="true">
           <property name="autoFillBackground">
            <bool>true</bool>
           </property>
@@ -148,71 +147,52 @@
        <string>Camera Settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Resolution:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Camera Device</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QSlider" name="exposureCompensation">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
        <item row="15" column="0">
-        <widget class="QPushButton" name="buttApply">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Apply Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QComboBox" name="code"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Video Codec:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
         <widget class="Line" name="line">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QComboBox" name="framerateBox"/>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Exposure</string>
+         </property>
+        </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QComboBox" name="cameraComboBox"/>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Video Codec:</string>
+         </property>
+        </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QComboBox" name="resolutionBox"/>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Resolution:</string>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Framerate:</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Camera Device</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QComboBox" name="cameraComboBox"/>
+       </item>
+       <item row="14" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <spacer name="horizontalSpacer">
@@ -243,7 +223,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="cameraview.qrc">
+            <iconset resource="../cameraview.qrc">
              <normaloff>:/images/stop-24px.svg</normaloff>:/images/stop-24px.svg</iconset>
            </property>
            <property name="iconSize">
@@ -270,7 +250,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="cameraview.qrc">
+            <iconset resource="../cameraview.qrc">
              <normaloff>:/images/play_circle-24px.svg</normaloff>:/images/play_circle-24px.svg</iconset>
            </property>
            <property name="iconSize">
@@ -299,7 +279,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QComboBox" name="resolutionBox"/>
+       </item>
        <item row="11" column="0">
+        <widget class="QSlider" name="exposureCompensation">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="0">
+        <widget class="QPushButton" name="buttApply">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Apply Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QComboBox" name="code"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QComboBox" name="framerateBox"/>
+       </item>
+       <item row="12" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -311,13 +324,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Exposure</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -354,7 +360,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -394,9 +400,74 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="cameraview.qrc"/>
+  <include location="../cameraview.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>Camera</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>154</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSettings</sender>
+   <signal>triggered()</signal>
+   <receiver>Camera</receiver>
+   <slot>configureCaptureSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStartCamera</sender>
+   <signal>triggered()</signal>
+   <receiver>Camera</receiver>
+   <slot>startCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStopCamera</sender>
+   <signal>triggered()</signal>
+   <receiver>Camera</receiver>
+   <slot>stopCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>record()</slot>
   <slot>pause()</slot>

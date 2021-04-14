@@ -1,4 +1,3 @@
-#define __SSP_STRONG__ 3
 #define __DBL_MIN_EXP__ (-1021)
 #define __cpp_attributes 200809L
 #define __UINT_LEAST16_MAX__ 0xffff
@@ -108,7 +107,6 @@
 #define __FLT64X_MANT_DIG__ 64
 #define __GNUC__ 10
 #define __GXX_RTTI 1
-#define __pie__ 2
 #define __MMX__ 1
 #define __FLT_HAS_DENORM__ 1
 #define __SIZEOF_LONG_DOUBLE__ 16
@@ -187,7 +185,7 @@
 #define __DEC128_MAX__ 9.999999999999999999999999999999999E6144DL
 #define __FLT_MANT_DIG__ 24
 #define __LDBL_DECIMAL_DIG__ 21
-#define __VERSION__ "10.2.0"
+#define __VERSION__ "10.2.1 20210303 [revision 85977f624a34eac309f9d77a58164553dfc82975]"
 #define __UINT64_C(c) c ## UL
 #define __cpp_unicode_characters 200704L
 #define _STDC_PREDEF_H 1
@@ -284,7 +282,6 @@
 #define __INTPTR_TYPE__ long int
 #define __UINT16_TYPE__ short unsigned int
 #define __WCHAR_TYPE__ int
-#define __pic__ 2
 #define __UINTPTR_MAX__ 0xffffffffffffffffUL
 #define __INT_FAST64_WIDTH__ 64
 #define __cpp_decltype 200707L
@@ -327,7 +324,7 @@
 #define __FLT64_MAX_EXP__ 1024
 #define __INT_LEAST32_TYPE__ int
 #define __SIZEOF_WCHAR_T__ 4
-#define __GNUC_PATCHLEVEL__ 0
+#define __GNUC_PATCHLEVEL__ 1
 #define __FLT128_NORM_MAX__ 1.18973149535723176508575932662800702e+4932F128
 #define __FLT64_NORM_MAX__ 1.79769313486231570814527423731704357e+308F64
 #define __FLT128_HAS_QUIET_NAN__ 1
@@ -352,7 +349,6 @@
 #define __FLT_DENORM_MIN__ 1.40129846432481707092372958328991613e-45F
 #define __INT8_MAX__ 0x7f
 #define __LONG_WIDTH__ 64
-#define __PIC__ 2
 #define __UINT_FAST32_TYPE__ long unsigned int
 #define __FLT32X_NORM_MAX__ 1.79769313486231570814527423731704357e+308F32x
 #define __CHAR32_TYPE__ unsigned int
@@ -373,7 +369,6 @@
 #define __GLIBCXX_TYPE_INT_N_0 __int128
 #define __INT_FAST16_WIDTH__ 64
 #define __UINTMAX_MAX__ 0xffffffffffffffffUL
-#define __PIE__ 2
 #define __FLT32X_DENORM_MIN__ 4.94065645841246544176568792868221372e-324F32x
 #define __DBL_MAX_10_EXP__ 308
 #define __LDBL_DENORM_MIN__ 3.64519953188247460252840593361941982e-4951L

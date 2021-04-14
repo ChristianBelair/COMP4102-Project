@@ -89,15 +89,14 @@ void CameraView::setCamera(const QCameraInfo &cameraInfo)
     std::cout << "Set camera event " << std::endl;
     m_camera.reset(new QCamera(cameraInfo));
 
-    //connect(m_camera.data(), &QCamera::stateChanged, this, &Camera::updateCameraState);
-    //connect(m_camera.data(), QOverload<QCamera::Error>::of(&QCamera::error), this, &Camera::displayCameraError);
+    connect(m_camera.data(), &QCamera::stateChanged, this, &CameraView::updateCameraState);
+    connect(m_camera.data(), QOverload<QCamera::Error>::of(&QCamera::error), this, &CameraView::displayCameraError);
 
     m_mediaRecorder.reset(new QMediaRecorder(m_camera.data()));
-    //connect(m_mediaRecorder.data(), &QMediaRecorder::stateChanged, this, &Camera::updateRecorderState);
+    connect(m_mediaRecorder.data(), &QMediaRecorder::stateChanged, this, &CameraView::updateRecorderState);
 
-    //connect(m_mediaRecorder.data(), &QMediaRecorder::durationChanged, this, &Camera::updateRecordTime);
-    //connect(m_mediaRecorder.data(), QOverload<QMediaRecorder::Error>::of(&QMediaRecorder::error),
-      //      this, &Camera::displayRecorderError);
+    connect(m_mediaRecorder.data(), &QMediaRecorder::durationChanged, this, &CameraView::updateRecordTime);
+    connect(m_mediaRecorder.data(), QOverload<QMediaRecorder::Error>::of(&QMediaRecorder::error), this, &CameraView::displayRecorderError);
 
     m_mediaRecorder->setMetaData(QMediaMetaData::Title, QVariant(QLatin1String("Test Title")));
 
@@ -112,12 +111,10 @@ void CameraView::setCamera(const QCameraInfo &cameraInfo)
     connect(m_camera.data(), QOverload<QCamera::LockStatus, QCamera::LockChangeReason>::of(&QCamera::lockStatusChanged),
             this, &CameraView::updateLockStatus);
 
-    //ui->captureWidget->setTabEnabled(0, (m_camera->isCaptureModeSupported(QCamera::CaptureStillImage)));
-    //ui->captureWidget->setTabEnabled(1, (m_camera->isCaptureModeSupported(QCamera::CaptureVideo)));
     //refreshSettings(m_mediaRecorder);
+    refreshSettings(m_mediaRecorder);
     updateCaptureMode();
     m_camera->start();
-    refreshSettings(m_mediaRecorder);
 }
 
 void CameraView::keyPressEvent(QKeyEvent * event)
@@ -194,6 +191,7 @@ void CameraView::pause()
 
 void CameraView::stop()
 {
+
     m_mediaRecorder->stop();
 }
 

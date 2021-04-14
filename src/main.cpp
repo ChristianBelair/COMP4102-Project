@@ -8,7 +8,9 @@ int main(int argc, char *argv[])
     QApplication::setDesktopSettingsAware(false);
     QApplication::setStyle(QStyleFactory::create("Fusion"));
     QApplication a(argc, argv);
-    CameraView c;
-    c.show();
+    CameraView driverView;
+    CameraView roadView;
+    driverView.show();
+    roadView.show();
     return a.exec();
 }

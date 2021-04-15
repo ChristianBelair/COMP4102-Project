@@ -23,7 +23,7 @@ namespace Ui {
 
         setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-        surface = new CustomVideoWidgetSurface(this, viewFlag);
+        surface = new CustomVideoWidgetSurface(this, vFlag);
     }
 
     CustomVideoWidget::~CustomVideoWidget()

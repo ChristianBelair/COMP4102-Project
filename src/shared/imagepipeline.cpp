@@ -7,7 +7,7 @@ namespace ass {
 
     }
 
-    QImage ImagePipeline::ProcessFrame(QImage &src) {
+    QImage ImagePipeline::ProcessFrame(QImage &src, bool viewFlag) {
         std::cout << "Pipeline tick " << std::endl;
         // Convert QImage to OpenCV Mat
         cv::Mat mat = QtOcv::image2Mat_shared(src);
@@ -20,8 +20,14 @@ namespace ass {
         cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
         cv::resize(outMat, outMat, cv::Size(800,600));
 
-        // Perform Eye tracking
-        outMat = eyeTracker.EyeTrackingPipeline(outMat);
+        if (viewFlag) {
+            // Perform Eye tracking
+            outMat = eyeTracker.EyeTrackingPipeline(outMat);
+        }
+        else {
+            outMat = pedTracker.PedTrackingPipeline(outMat);
+        }
+        
         cv::resize(outMat, outMat, mat.size());
 
         cv::putText(outMat,

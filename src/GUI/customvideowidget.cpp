@@ -8,7 +8,7 @@
 
 namespace Ui {
 
-    CustomVideoWidget::CustomVideoWidget(QWidget *parent)
+    CustomVideoWidget::CustomVideoWidget(QWidget *parent, bool vFlag)
         : QWidget(parent)
         , surface(0)
     {
@@ -23,7 +23,7 @@ namespace Ui {
 
         setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-        surface = new CustomVideoWidgetSurface(this);
+        surface = new CustomVideoWidgetSurface(this, viewFlag);
     }
 
     CustomVideoWidget::~CustomVideoWidget()

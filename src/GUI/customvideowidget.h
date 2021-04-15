@@ -12,7 +12,7 @@ namespace Ui {
         Q_OBJECT
 
     public:
-        CustomVideoWidget(QWidget *parent = 0);
+        CustomVideoWidget(QWidget *parent = 0, bool vFlag = true);
         ~CustomVideoWidget();
 
         QAbstractVideoSurface *videoSurface() const { return surface; }

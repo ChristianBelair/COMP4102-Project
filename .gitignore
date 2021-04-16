@@ -1,3 +1,9 @@
+# Dev Environment
+.vscode
+
+# Sign Tracking ML data
+trainingData
+
 # Prerequisites
 *.d
 

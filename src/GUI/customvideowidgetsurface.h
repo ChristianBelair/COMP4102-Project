@@ -13,7 +13,7 @@ namespace Ui {
         Q_OBJECT
 
         public:
-            CustomVideoWidgetSurface(QWidget *widget, QObject *parent = 0);
+            CustomVideoWidgetSurface(QWidget *widget, QObject *parent = 0, bool vFlag = true);
 
             QList<QVideoFrame::PixelFormat> supportedPixelFormats(
                     QAbstractVideoBuffer::HandleType handleType = QAbstractVideoBuffer::NoHandle) const override;
@@ -38,6 +38,7 @@ namespace Ui {
             QVideoFrame currentFrame;
             // Custom image pipeline
             ass::ImagePipeline pipeline;
+            bool viewFlag;
     };
 }
 

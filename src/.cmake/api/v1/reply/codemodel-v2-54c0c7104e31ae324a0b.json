@@ -8,7 +8,7 @@
 					"build" : ".",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.9"
+						"string" : "3.5"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -40,7 +40,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "AutomtiveSafetySuite::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-AutomtiveSafetySuite-d8a6c8ee6006b1da2728.json",
+					"jsonFile" : "target-AutomtiveSafetySuite-6c8d684c5625291e7e10.json",
 					"name" : "AutomtiveSafetySuite",
 					"projectIndex" : 0
 				},
@@ -57,8 +57,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/conner/Projects/COMP4102-Project/src",
-		"source" : "/home/conner/Projects/COMP4102-Project/src"
+		"build" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src",
+		"source" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
 	},
 	"version" : 
 	{

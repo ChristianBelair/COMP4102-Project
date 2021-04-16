@@ -103,6 +103,7 @@ void CameraView::setCamera(const QCameraInfo &cameraInfo)
     //connect(ui->exposureCompensation, &QAbstractSlider::valueChanged, this, &Camera::setExposureCompensation);
 
     m_camera->setViewfinder(ui->viewfinder->videoSurface());
+    m_camera->setViewfinder(ui->viewfinder_2->videoSurface());
 
     updateCameraState(m_camera->state());
     updateLockStatus(m_camera->lockStatus(), QCamera::UserRequest);

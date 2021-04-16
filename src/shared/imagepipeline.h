@@ -13,7 +13,7 @@ namespace ass {
     public:
         ImagePipeline();
 
-        QImage ProcessFrame(QImage &frame);
+        QImage ProcessFrame(QImage &frame, bool viewFlag = true);
 
     private:
         EyeTracking eyeTracker;

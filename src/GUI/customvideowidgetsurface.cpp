@@ -9,12 +9,13 @@
 
 namespace Ui {
 
-    CustomVideoWidgetSurface::CustomVideoWidgetSurface(QWidget *widget, QObject *parent)
+    CustomVideoWidgetSurface::CustomVideoWidgetSurface(QWidget *widget, QObject *parent, bool vFlag)
         : QAbstractVideoSurface(parent)
         , widget(widget)
         , imageFormat(QImage::Format_Invalid)
     {
         std::cout << "CustomVideoWidgetSurface ctor, image format " << imageFormat << std::endl;
+        viewFlag = vFlag;
     }
 
     QList<QVideoFrame::PixelFormat> CustomVideoWidgetSurface::supportedPixelFormats(
@@ -90,7 +91,7 @@ namespace Ui {
                 QImage conv = frame.image();
 
                 // Send image through pipeline
-                conv = pipeline.ProcessFrame(conv);
+                conv = pipeline.ProcessFrame(conv, viewFlag);
 
                 // Convert back to QVideoFrame for rendering
                 currentFrame = QVideoFrame(conv);

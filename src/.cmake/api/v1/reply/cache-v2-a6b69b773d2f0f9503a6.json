@@ -2,6 +2,30 @@
 	"entries" : 
 	[
 		{
+			"name" : "AutomotiveSafetySuite_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
+		},
+		{
+			"name" : "AutomotiveSafetySuite_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
+		},
+		{
 			"name" : "AutomtiveSafetySuite_BINARY_DIR",
 			"properties" : 
 			[
@@ -11,7 +35,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/conner/Projects/COMP4102-Project/src"
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
 		},
 		{
 			"name" : "AutomtiveSafetySuite_SOURCE_DIR",
@@ -23,7 +47,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/conner/Projects/COMP4102-Project/src"
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
 		},
 		{
 			"name" : "CMAKE_ADDR2LINE",
@@ -79,7 +103,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/conner/Projects/COMP4102-Project/src"
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -115,7 +139,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "7"
+			"value" : "6"
 		},
 		{
 			"name" : "CMAKE_COLOR_MAKEFILE",
@@ -182,7 +206,7 @@
 					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "/usr/bin/c++"
 		},
 		{
@@ -199,7 +223,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-10"
+			"value" : "/usr/bin/gcc-ar"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_RANLIB",
@@ -215,7 +239,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-10"
+			"value" : "/usr/bin/gcc-ranlib"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -503,7 +527,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/conner/Projects/COMP4102-Project/src"
+			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -559,7 +583,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gmake"
+			"value" : "/usr/bin/make"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -791,7 +815,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/usr/share/cmake"
+			"value" : "/usr/share/cmake-3.19"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",

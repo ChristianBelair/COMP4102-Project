@@ -11,6 +11,8 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/objdetect.hpp>
 
+const float HIT_THRESHOLD = 0.6;
+
 namespace ass {
     class PedTracking {
         public:

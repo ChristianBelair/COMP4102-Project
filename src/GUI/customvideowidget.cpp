@@ -36,6 +36,10 @@ namespace Ui {
         return surface->surfaceFormat().sizeHint();
     }
 
+    void CustomVideoWidget::setVFlag(bool vFlag) {
+        surface->setVFlag(vFlag);
+    }
+
     void CustomVideoWidget::paintEvent(QPaintEvent *event)
     {
         QPainter painter(this);

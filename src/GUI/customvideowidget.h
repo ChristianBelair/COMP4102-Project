@@ -19,6 +19,8 @@ namespace Ui {
 
         QSize sizeHint() const override;
 
+        void setVFlag(bool vFlag = true);
+
     protected:
         void paintEvent(QPaintEvent *event) override;
         void resizeEvent(QResizeEvent *event) override;

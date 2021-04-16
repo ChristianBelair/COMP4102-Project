@@ -29,6 +29,8 @@ namespace Ui {
 
             void paint(QPainter *painter);
 
+            void setVFlag(bool vFlag = true);
+
         private:
             QWidget *widget;
             QImage::Format imageFormat;

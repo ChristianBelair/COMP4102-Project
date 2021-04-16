@@ -8,7 +8,10 @@
 #include <QPushButton>
 #include <QMainWindow>
 #include <QComboBox>
+#include <QMediaPlayer>
 #include "ui_cameraview.h"
+
+#include "customvideowidgetsurface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CameraView; }
@@ -21,6 +24,12 @@ class CameraView : public QMainWindow
 
 public:
     CameraView();
+
+    void setUrl(const QUrl &url);
+
+public slots:
+    void openFile();
+    void play();
 
 private slots:
     void setCamera(const QCameraInfo &cameraInfo);
@@ -63,6 +72,12 @@ private slots:
 
     void showHelp();
 
+    void mediaStateChanged(QMediaPlayer::State state);
+    void positionChanged(qint64 position);
+    void durationChanged(qint64 duration);
+    void setPosition(int position);
+    void handleError();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
@@ -74,6 +89,8 @@ private:
 
     QScopedPointer<QCamera> m_camera;
     QScopedPointer<QMediaRecorder> m_mediaRecorder;
+
+    QMediaPlayer* m_mediaPlayer;
 
     QImageEncoderSettings m_imageSettings;
     QAudioEncoderSettings m_audioSettings;

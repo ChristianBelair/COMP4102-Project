@@ -96,9 +96,9 @@ namespace Ui {
                 // Convert back to QVideoFrame for rendering
                 currentFrame = QVideoFrame(conv);
                 widget->repaint(targetRect);
-            }  catch (...) {
+            }  catch (cv::Exception& e) {
                 // Things tend to break here when changing video streams, we can just eat exceptions for now?
-                std::cout << "ow" << std::endl;
+                std::cout << e.what() << std::endl;
                 return true;
             }
             return true;
@@ -144,4 +144,7 @@ namespace Ui {
     }
     //! [6]
 
+    void CustomVideoWidgetSurface::setVFlag(bool vFlag) {
+        viewFlag = vFlag;
+    }
 }

@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QPalette>
 #include <QtWidgets>
+#include <QVideoWidget>
 
 #include "cameraview.h"
 #include "userhelpdialog.h"
@@ -31,9 +32,24 @@ CameraView::CameraView() : ui(new Ui::CameraView)
     connect(ui->buttPlay, &QPushButton::released, this, &CameraView::startCamera);
     connect(ui->buttPause, &QPushButton::released, this, &CameraView::stopCamera);
 
+    connect(ui->buttOpenFile, &QPushButton::released, this, &CameraView::openFile);
+    connect(ui->buttPlayVideo, &QPushButton::released, this, &CameraView::play);
+
     ui->buttPlay->setHidden(true);
+    ui->buttPlayVideo->setEnabled(false);
 
     connect(ui->buttHelp, &QPushButton::released, this, &CameraView::showHelp);
+
+    m_mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+
+    connect(ui->videoSlider, &QAbstractSlider::sliderMoved, this, &CameraView::setPosition);
+    
+    ui->roadViewPlayer->setVFlag(false);
+    m_mediaPlayer->setVideoOutput(ui->roadViewPlayer->videoSurface());
+    connect(m_mediaPlayer, &QMediaPlayer::stateChanged, this, &CameraView::mediaStateChanged);
+    connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this, &CameraView::positionChanged);
+    connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this, &CameraView::durationChanged);
+    connect(m_mediaPlayer, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &CameraView::handleError);
 }
 
 void CameraView::showHelp() {
@@ -103,7 +119,6 @@ void CameraView::setCamera(const QCameraInfo &cameraInfo)
     //connect(ui->exposureCompensation, &QAbstractSlider::valueChanged, this, &Camera::setExposureCompensation);
 
     m_camera->setViewfinder(ui->viewfinder->videoSurface());
-    m_camera->setViewfinder(ui->viewfinder_2->videoSurface());
 
     updateCameraState(m_camera->state());
     updateLockStatus(m_camera->lockStatus(), QCamera::UserRequest);
@@ -172,7 +187,7 @@ void CameraView::processCapturedImage(int requestId, const QImage& img)
                                     Qt::KeepAspectRatio,
                                     Qt::SmoothTransformation);
 
-    ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
+    // ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
 
     // Display captured image for 4 seconds.
     displayCapturedImage();
@@ -313,12 +328,12 @@ void CameraView::updateCameraDevice(int index)
 
 void CameraView::displayViewfinder()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    // ui->verticalLayout->setCurrentIndex(0);
 }
 
 void CameraView::displayCapturedImage()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    // ui->verticalLayout->setCurrentIndex(1);
 }
 
 void CameraView::readyForCapture(bool ready)
@@ -346,4 +361,76 @@ void CameraView::closeEvent(QCloseEvent *event)
     } else {
         event->accept();
     }
+}
+
+void CameraView::setUrl(const QUrl &url)
+{
+    ui->errorLabel->setText(QString());
+    setWindowFilePath(url.isLocalFile() ? url.toLocalFile() : QString());
+    m_mediaPlayer->setMedia(url);
+    ui->buttPlayVideo->setEnabled(true);
+}
+
+void CameraView::openFile()
+{
+    QFileDialog fileDialog(this);
+    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog.setWindowTitle(tr("Open Movie"));
+    QStringList supportedMimeTypes = m_mediaPlayer->supportedMimeTypes();
+    if (!supportedMimeTypes.isEmpty())
+        fileDialog.setMimeTypeFilters(supportedMimeTypes);
+    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
+    if (fileDialog.exec() == QDialog::Accepted)
+        setUrl(fileDialog.selectedUrls().constFirst());
+}
+
+void CameraView::play()
+{
+    switch (m_mediaPlayer->state()) {
+    case QMediaPlayer::PlayingState:
+        m_mediaPlayer->pause();
+        break;
+    default:
+        m_mediaPlayer->play();
+        break;
+    }
+}
+
+void CameraView::mediaStateChanged(QMediaPlayer::State state)
+{
+    switch(state) {
+    case QMediaPlayer::PlayingState:
+        ui->buttPlayVideo->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+        break;
+    default:
+        ui->buttPlayVideo->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+        break;
+    }
+}
+
+void CameraView::positionChanged(qint64 position)
+{
+    ui->videoSlider->setValue(position);
+}
+
+void CameraView::durationChanged(qint64 duration)
+{
+    ui->videoSlider->setRange(0, duration);
+}
+
+void CameraView::setPosition(int position)
+{
+    m_mediaPlayer->setPosition(position);
+}
+
+void CameraView::handleError()
+{
+    ui->buttPlayVideo->setEnabled(false);
+    const QString errorString = m_mediaPlayer->errorString();
+    QString message = "Error: ";
+    if (errorString.isEmpty())
+        message += " #" + QString::number(int(m_mediaPlayer->error()));
+    else
+        message += errorString;
+    ui->errorLabel->setText(message);
 }

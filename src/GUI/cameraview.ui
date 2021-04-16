@@ -23,8 +23,8 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>10</y>
+      <x>540</x>
+      <y>130</y>
       <width>250</width>
       <height>437</height>
      </rect>
@@ -230,8 +230,8 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>400</width>
-      <height>300</height>
+      <width>521</width>
+      <height>291</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -250,6 +250,16 @@
  border-color: red;</string>
     </property>
    </widget>
+   <widget class="Ui::CustomVideoWidget" name="virefinder_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>521</width>
+      <height>241</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -257,7 +267,7 @@
      <x>0</x>
      <y>0</y>
      <width>799</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>

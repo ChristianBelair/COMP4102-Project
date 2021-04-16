@@ -124,7 +124,6 @@ void CameraView::keyPressEvent(QKeyEvent * event)
 
     switch (event->key()) {
     case Qt::Key_CameraFocus:
-        displayViewfinder();
         m_camera->searchAndLock();
         event->accept();
         break;
@@ -162,20 +161,6 @@ void CameraView::updateRecordTime()
 {
     QString str = QString("Recorded %1 sec").arg(m_mediaRecorder->duration()/1000);
     ui->statusbar->showMessage(str);
-}
-
-void CameraView::processCapturedImage(int requestId, const QImage& img)
-{
-    Q_UNUSED(requestId);
-    QImage scaledImage = img.scaled(ui->viewfinder->size(),
-                                    Qt::KeepAspectRatio,
-                                    Qt::SmoothTransformation);
-
-    ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
-
-    // Display captured image for 4 seconds.
-    displayCapturedImage();
-    QTimer::singleShot(4000, this, &CameraView::displayViewfinder);
 }
 
 void CameraView::record()
@@ -308,16 +293,6 @@ void CameraView::updateCameraDevice(int index)
 {
     std::cout << "UpdateCameraDevice event " << index << std::endl;
     setCamera(qvariant_cast<QCameraInfo>(cameras[index]));
-}
-
-void CameraView::displayViewfinder()
-{
-    ui->stackedWidget->setCurrentIndex(0);
-}
-
-void CameraView::displayCapturedImage()
-{
-    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void CameraView::readyForCapture(bool ready)

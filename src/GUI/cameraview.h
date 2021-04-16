@@ -49,11 +49,7 @@ private slots:
 
     void updateRecordTime();
 
-    void processCapturedImage(int requestId, const QImage &img);
     void updateLockStatus(QCamera::LockStatus, QCamera::LockChangeReason);
-
-    void displayViewfinder();
-    void displayCapturedImage();
 
     void readyForCapture(bool ready);
     void imageSaved(int id, const QString &fileName);

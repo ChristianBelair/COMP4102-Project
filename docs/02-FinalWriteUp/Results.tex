@@ -1,2 +1,9 @@
 \section{Results}
 
+\subsection{Gaze Tracking}
+
+
+\subsection{Pedestrian Tracking}
+When it comes to tracking pedestrians using the HOG descriptor, the results are better than chance but the accuracy is lackluster. While it can identify human shaped gradients within a frame efficiently, it can find anything within the frame that is human-shaped. It also has some issues with respect to detecting human-shaped blobs in negative space. An example of this while testing is the shape of a shirt in someone's arm pit produces results of a human-shaped object within the frame. It also seems to have difficulty detecting humans when they are too close to the camera. While this is not necessarily important when considering the distance at which a pedestrian would be from a car, the results show that the HOG descriptor does have some limitation when trying to identify nearby objects.
+
+\subsection{Road Sign Tracking}

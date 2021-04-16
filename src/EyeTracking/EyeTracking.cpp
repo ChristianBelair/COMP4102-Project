@@ -8,13 +8,15 @@
 #include "3rdparty/eyeLike/src/findEyeCorner.h"
 
 ass::EyeTracking::EyeTracking() {
+    eyeState = 0;
     auto ret = classifier.load(cascadeFile);
     if (!ret) {
         std::cout << "!!! ERROR IN EYE TRACKING: classifier cascade file failed " << cascadeFile << std::endl;
     }
 }
 
-cv::Mat ass::EyeTracking::EyeTrackingPipeline(cv:: Mat &in) {
+ass::EyeTrackingResult ass::EyeTracking::EyeTrackingPipeline(cv:: Mat &in) {
+    EyeTrackingResult res;
     std::vector<cv::Rect> faces;
     std::vector<cv::Mat> rgbChannels(3);
     cv::split(in, rgbChannels);
@@ -24,7 +26,8 @@ cv::Mat ass::EyeTracking::EyeTrackingPipeline(cv:: Mat &in) {
 
     if (faces.size() == 0) {
         // No faces found, can't perform eye tracking
-        return in;
+        res.result = in;
+        return res;
     }
 
     cv::Mat face = findEyes(gray_img, faces[0]);
@@ -33,7 +36,9 @@ cv::Mat ass::EyeTracking::EyeTrackingPipeline(cv:: Mat &in) {
 
     // Resize the output to match the input
     cv::resize(out, out, in.size());
-    return out;
+    res.result = out;
+    res.eyeState = eyeState;
+    return res;
 }
 
 cv::Mat ass::EyeTracking::findEyes(cv::Mat frame_gray, cv::Rect face) {
@@ -89,6 +94,33 @@ cv::Mat ass::EyeTracking::findEyes(cv::Mat frame_gray, cv::Rect face) {
     rightPupil.y += rightEyeRegion.y;
     leftPupil.x += leftEyeRegion.x;
     leftPupil.y += leftEyeRegion.y;
+
+    //  --- Try to guess where the gaze is ---
+    int rightEyeMin = rightEyeRegion.x;
+    // Normalize the values to all be relative to rightEyeMin
+    int rightEyeLoc = rightPupil.x - rightEyeMin;
+    int rightEyeMax = rightEyeRegion.width;
+    // Normalize the values to be relative to leftEyeMin
+    int leftEyeMin  = leftEyeRegion.x;
+    int leftEyeLoc  = leftPupil.x - leftEyeMin;
+    int leftEyeMax  = leftEyeRegion.width;
+
+    // std::cout << rightEyeMin << " " << rightEyeLoc << " " << rightEyeMax << std::endl
+    float eyeLoc = (
+                ((float)rightEyeLoc / (float)rightEyeMax)
+                + ((float)leftEyeLoc / (float)leftEyeMax)
+                ) / 2;
+
+    if (0.4 > eyeLoc ) {
+        //std::cout << "EYE -> RIGHT " << eyeLoc << std::endl;
+        eyeState = 1;
+    } else if (eyeLoc > 0.6) {
+        //std::cout << "EYE -> LEFT " << eyeLoc << std::endl;
+        eyeState = -1;
+    } else {
+        //std::cout << "EYE -> CENTER " << eyeLoc  << std::endl;
+        eyeState = 0;
+    }
 
     // draw eye centers
     circle(debugFace, rightPupil, 3, 1234);

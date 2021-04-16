@@ -50,6 +50,14 @@ CameraView::CameraView() : ui(new Ui::CameraView)
     connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this, &CameraView::positionChanged);
     connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this, &CameraView::durationChanged);
     connect(m_mediaPlayer, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &CameraView::handleError);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &CameraView::refreshEyeTrackingLabel);
+    timer->start(100);
+}
+
+void CameraView::refreshEyeTrackingLabel() {
+    ui->EyeTrackingStateLabel->setText(QString::fromStdString(eyeTrackingState.GetEyeTrackingStateString()));
 }
 
 void CameraView::showHelp() {

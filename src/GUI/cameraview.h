@@ -10,8 +10,8 @@
 #include <QComboBox>
 #include <QMediaPlayer>
 #include "ui_cameraview.h"
-
 #include "customvideowidgetsurface.h"
+#include "shared/eyetrackingstate.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CameraView; }
@@ -100,6 +100,9 @@ private:
     QString m_videoContainerFormat;
     bool m_isCapturingImage = false;
     bool m_applicationExiting = false;
+
+    ass::EyeTrackingState eyeTrackingState;
+    void refreshEyeTrackingLabel();
 };
 
 

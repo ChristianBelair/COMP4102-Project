@@ -6,13 +6,13 @@
 #include <vector>
 #include <sys/stat.h>
 
-#include "opencv4/opencv2/core/base.hpp"
-#include "opencv4/opencv2/core.hpp"
-#include "opencv4/opencv2/videoio.hpp"
-#include "opencv4/opencv2/imgproc.hpp"
-#include "opencv4/opencv2/imgcodecs.hpp"
-#include "opencv4/opencv2/objdetect.hpp"
-#include "opencv4/opencv2/ml.hpp"
+#include "opencv2/core/base.hpp"
+#include "opencv2/core.hpp"
+#include "opencv2/videoio.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/objdetect.hpp"
+#include "opencv2/ml.hpp"
 
 namespace ass {
     class SignTrackingResult {

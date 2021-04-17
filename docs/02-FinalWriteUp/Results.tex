@@ -1,7 +1,22 @@
 \section{Results}
 
 \subsection{Gaze Tracking}
-
+For our gaze tracking component, we investigated a few different approaches to gaze tracking as documented in the survey of gaze tracking performed by 
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/EyeTrackingStraight.png}
+      \captionof{figure}{Gaze tracking, straight. In the top lefthand corner of the window is the current eye tracking state}
+      \label{fig:test1}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{figures/EyeTrackingRight.png}
+      \captionof{figure}{Gaze tracking, right. In this example the left bounding box mistook the dark region of hair as a pupil}
+      \label{fig:test2}
+    \end{minipage}
+\end{figure}
 
 \subsection{Pedestrian Tracking}
 The original testing results when testing with a laptop camera were a little lackluster. For the most part, the use of the HOG descriptor using this wecam resulted in inaccurate readings of human objects within the frame. Mostly it would detect human-like objects in the negative space between objects. An example of this would be when someone was standing reasonably far away from the camera and the HOG descriptor would identify human-shaped objects in the armpits of the subject standing in front of the camera or in the surrounding spaces. Another example is when the subject was standing in front of the camera with their hand turned sideways. This issue arose because the quality of the camera used produced a significant amount of noise in each frame resulting in changes in gradients.\\

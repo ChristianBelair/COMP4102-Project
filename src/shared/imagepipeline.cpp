@@ -54,6 +54,7 @@ namespace ass {
             cv::resize(outMat, outMat, cv::Size(800,600));
 
             PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
+            SignTrackingResult signRes = signTracker.SignTrackingPipeline(outMat);
             outMat = res.result;
 
             int eyeState = sharedState.GetEyeTrackingState();

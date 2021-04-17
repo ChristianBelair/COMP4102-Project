@@ -2,30 +2,6 @@
 	"entries" : 
 	[
 		{
-			"name" : "AutomotiveSafetySuite_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
-		},
-		{
-			"name" : "AutomotiveSafetySuite_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/cbelair/Desktop/COMP_XXXX/4th_Year/COMP4102/COMP4102-Project/src"
-		},
-		{
 			"name" : "AutomtiveSafetySuite_BINARY_DIR",
 			"properties" : 
 			[
@@ -127,7 +103,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "19"
+			"value" : "20"
 		},
 		{
 			"name" : "CMAKE_CACHE_PATCH_VERSION",
@@ -139,7 +115,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "6"
+			"value" : "0"
 		},
 		{
 			"name" : "CMAKE_COLOR_MAKEFILE",
@@ -206,7 +182,7 @@
 					"value" : "CXX compiler"
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "/usr/bin/c++"
 		},
 		{
@@ -815,7 +791,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/usr/share/cmake-3.19"
+			"value" : "/usr/share/cmake-3.20"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",

@@ -53,9 +53,39 @@ namespace ass {
             cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
             cv::resize(outMat, outMat, cv::Size(800,600));
 
-            outMat = pedTracker.PedTrackingPipeline(outMat);
+            PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
+            outMat = res.result;
+
+            int eyeState = sharedState.GetEyeTrackingState();
+            int count = 0;
+
+            for (int i = 0; i < res.pedRegions.size(); ++i) {
+                int reg_center = res.pedRegions[i].x + (res.pedRegions[i].width / 2);
+                int pedState = 0;
+
+                if (reg_center < (int)(outMat.cols * 0.4)) {
+                    pedState = -1;
+                }
+                else if (reg_center > (int)(outMat.cols * 0.6)) {
+                    pedState = 1;
+                }
+
+                if (pedState == eyeState) {
+                    ++count;
+                }
+            }
+
+            std::string response = "";
+            if (count >= res.pedRegions.size()) {
+                response += "Paying Attention";
+            }
+            else {
+                response += "Distracted";
+            }
 
             cv::resize(outMat, outMat, mat.size());
+
+            cv::putText(outMat, response, cv::Point(20, 80), cv::FONT_HERSHEY_PLAIN, 2.0, cv::Scalar(0,64,255));
         }
 
         // Convert outmat to QImage and return

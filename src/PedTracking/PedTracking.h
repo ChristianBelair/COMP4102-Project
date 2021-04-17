@@ -11,9 +11,13 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/objdetect.hpp>
 
-const float HIT_THRESHOLD = 0.6;
-
 namespace ass {
+    class PedTrackingResult {
+        public:
+            cv::Mat result;
+            std::vector<cv::Rect> pedRegions;
+    };
+
     class PedTracking {
         public:
             PedTracking();
@@ -22,7 +26,7 @@ namespace ass {
             void VideoTest(std::string video);
             void TrackPeds();
             void TrackPeds(int cameraNumber);
-            cv::Mat PedTrackingPipeline(cv::Mat frame);
+            PedTrackingResult PedTrackingPipeline(cv::Mat frame);
     };
 }
 

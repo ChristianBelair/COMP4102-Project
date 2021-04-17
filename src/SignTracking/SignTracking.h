@@ -23,7 +23,6 @@ namespace ass {
 
     class SignTracker {
         public:
-            cv::Mat trackSigns(const cv::Mat);
-            SignTrackingResult SignTrackingPipeline(cv::Mat frame);
+            SignTrackingResult SignTrackingPipeline(const cv::Mat frame);
     };
 }

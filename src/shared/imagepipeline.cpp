@@ -47,24 +47,22 @@ namespace ass {
             cv::putText(outMat, sharedState.GetEyeTrackingStateString(), cv::Point(20, 80), cv::FONT_HERSHEY_PLAIN, 2.0, cv::Scalar(0,64,255));
         }
         else {
+            cv::Mat temp = mat.clone();
             //std::cout << "PedTrackingPipeline tick " << std::endl;
-            cv::Mat temp2;
-            outMat.create(mat.size(), mat.type());
-            cv::resize(outMat, outMat, cv::Size(800,600));
-            SignTrackingResult signRes = signTracker.SignTrackingPipeline(outMat);
             cv::cvtColor(mat, mat, cv::COLOR_BGRA2GRAY);
-            temp2.create(mat.size(), mat.type());
-            mat.copyTo(temp2);
-            cv::cvtColor(temp2, temp2, cv::COLOR_GRAY2BGRA);
-            cv::resize(temp2, temp2, cv::Size(800,600));
+            outMat.create(mat.size(), mat.type());
+            mat.copyTo(outMat);
+            cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
+            cv::resize(outMat, outMat, cv::Size(800,600));
+            cv::resize(temp, temp, cv::Size(800,600));
 
-            PedTrackingResult res = pedTracker.PedTrackingPipeline(temp2);
-            
+            SignTrackingResult signRes = signTracker.SignTrackingPipeline(temp);
+            // Perform Pedestrian Tracking
+            PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
+            outMat = res.result;
+
             for(auto iter = signRes.signRegions.begin(); iter != signRes.signRegions.end(); ++iter) {
                 cv::rectangle(outMat, *iter, cv::Scalar(255,0,0), 3);
-            }
-            for(auto iter = res.pedRegions.begin(); iter != res.pedRegions.end(); ++iter) {
-                cv::rectangle(outMat, *iter, cv::Scalar(0,0,255), 3);
             }
 
             // Get the current eye state

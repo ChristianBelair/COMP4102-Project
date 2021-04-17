@@ -1,2 +1,12 @@
 \section{Approach}
 
+\subsection{Gaze Tracking}
+
+
+\subsection{Pedestrian Tracking}
+Pedestrian tracking is achieved through a single function which takes in a \emph{cv::Mat} object that represents the current frame of the video and returns a custom data structure called \emph{PedTrackingResult}. The function initializes an instance of OpenCV's \emph{HOGDescriptor} object. With the help of OpenCV, this object can be passed a human detection method which can be passed to the \emph{HOGDescriptor}. Once this method is passed to the \emph{HOGDescriptor}, a clone of the original frame is produced. From here, the process of identifying humans in the frame is done by the work of the \emph{HOGDescriptor} using its \emph{detectMultiScale()} function after converting the input frame from four channels to one channel as needed by the function. This function produces a vector of \emph{cv::Rect} objects representing the bounding boxes for human-shaped objects in the frame and the weights associated with these bounding boxes. From here each \emph{cv::Rect} object in the frame is drawn onto the frame with its associated weight. The resulting frame and \emph{cv::Rect} vector is returned to the image pipeline in order to display the frame and to calculate driver attentiveness.\\
+
+With the returned vector we first calculate the centre of the width for each \emph{cv::Rect} object. We then compare this center pixel against which third of the main video width the bounding box's centre lies in. We then compare the current eye state to this pedestrian object state and see if the driver is looking at the same third. This process is applied to each bounding box until the end of the list has been reached. Since there are three thirds of the window, if there are an even number of objects detected in each window then we can say that the minimum rate for attentiveness is a third of the total detected pedestrians. This means that if a driver pays attention to third with the most number of pedestrians then the minimum threshold needed for the classification to be passable for driving is $\frac{1}{3}$.
+
+\subsection{Road Sign Tracking}
+

@@ -1,89 +1,146 @@
 #include "SignTracking.h"
 
-
-ass::SignTracker::SignTracker() {
-    if(exists("svm_data.xml")) {
-        // Loads in the sign detecting svm
-        // For a proper explination, see:
-        // https://docs.opencv.org/master/d0/df8/samples_2cpp_2train_HOG_8cpp-example.html#a55
-        cv::Ptr<cv::ml::SVM> svm = cv::ml::SVM::create();
-        svm = cv::Algorithm::load<cv::ml::SVM>("svm_data.xml");
-        cv::Mat sv = svm->getSupportVectors();
-        const int sv_total = sv.rows;
-        cv::Mat alpha, svidx;
-        double rho = svm->getDecisionFunction(0, alpha, svidx);
-
-        std::vector<float> hog_detector(sv.cols + 1);
-        memcpy(&hog_detector[0], sv.ptr(), sv.cols * sizeof(hog_detector[0]));
-        hog_detector[sv.cols] = (float)-rho;
-
-        cv::HOGDescriptor hog;
-        hog.winSize = cv::Size(64,64);
-        hog.setSVMDetector(hog_detector);
-        hog.save("sign_detector.yml");
-    }
-    else {
-        // Do some sort of warning logging
-        return;
-    }
-}
-
-void ass::SignTracker::trackSigns(int c) {
-
-}
-
 cv::Mat ass::SignTracker::trackSigns(const cv::Mat frame) {
-    cv::HOGDescriptor hog;
-    hog.load("sign_detector.yml");
-
     cv::Mat img = frame.clone();
-    std::vector<cv::Rect> found;
-    std::vector<double> weights;
+    cv::Mat res = frame.clone();
+    cv::cvtColor(img, img, cv::COLOR_BGR2HSV);
+    
+    // Searches the red space
+    cv::Mat mask1, mask2, maskRed;
+    cv::Mat canny;
+    cv::inRange(img, cv::Scalar(0, 70, 60), cv::Scalar(10, 255, 255), mask1);
+    cv::inRange(img, cv::Scalar(170, 70, 60), cv::Scalar(180, 255, 255), mask2);
+    cv::bitwise_or(mask1, mask2, maskRed);
 
-    hog.detectMultiScale(img, found, weights, 0.0, cv::Size(8,8));
+    cv::Canny(maskRed, canny, 100, 255);
 
-    for(size_t i = 0; i < found.size(); ++i) {
-        if(weights[i] > .7) {
-            cv::Rect r = found[i];
-            cv::rectangle(img, r, cv::Scalar(255, 0, 0), 3);
-            std::ostringstream buf;
-            buf << weights[i];
-            cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 0, 0));
+    cv::Mat kernel = cv::Mat::ones(cv::Size(5,5), CV_8U);
+    cv::dilate(canny, canny, kernel);
+
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+
+    cv::findContours(canny, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+
+    for(auto iter = contours.begin(); iter != contours.end(); ++iter) {
+        if (cv::contourArea(*iter) > 500) {
+            double peri = cv::arcLength(*iter, true);
+            std::vector<cv::Point> approx;
+            cv::approxPolyDP(*iter, approx, .03 * peri, true);
+            if (approx.size() == 8 || approx.size() == 3) {
+                std::cout << approx.size() << std::endl;
+                cv::Rect bounds = cv::boundingRect(approx);
+                cv::rectangle(res, bounds, cv::Scalar(255,0,0), 3);
+            }
         }
     }
-    return img;
-}
 
-// This functions locks us fully into POSIX system
-// Just checks if a file exists, stat is the fastest method
-bool ass::SignTracker::exists(const std::string name) {
-    struct stat buffer;
-    return (stat (name.c_str(), &buffer) == 0); 
+    // Searches the yellow space
+    cv::Mat maskYel;
+    cv::inRange(img, cv::Scalar(20, 100, 100), cv::Scalar(30, 255, 255), maskYel);
+    
+    cv::Canny(maskRed, canny, 100, 255);
+
+    cv::dilate(canny, canny, kernel);
+
+    cv::findContours(canny, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+    for(auto iter = contours.begin(); iter != contours.end(); ++iter) {
+        if (cv::contourArea(*iter) > 500) {
+            double peri = cv::arcLength(*iter, true);
+            std::vector<cv::Point> approx;
+            cv::approxPolyDP(*iter, approx, .03 * peri, true);
+            if (approx.size() == 4 || approx.size() == 5) {
+                std::cout << approx.size() << std::endl;
+                cv::Rect bounds = cv::boundingRect(approx);
+                cv::rectangle(res, bounds, cv::Scalar(255,0,0), 3);
+            }
+        }
+    }
+    return res;
 }
 
 ass::SignTrackingResult ass::SignTracker::SignTrackingPipeline(cv::Mat frame) {
-    cv::HOGDescriptor hog;
-    hog.load("sign_detector.yml");
-
     cv::Mat img = frame.clone();
-
+    cv::Mat response = frame.clone();
     std::vector<cv::Rect> found;
-    std::vector<double> weights;
 
-    cv::cvtColor(img, img, cv::COLOR_BGRA2GRAY);
-    std::cout << "img.type() = " << img.type() << std::endl;
-    // if (img)
+    cv::cvtColor(img, img, cv::COLOR_BGR2HSV);
+    
+    // Searches the red space
+    cv::Mat mask1, mask2, maskRed;
+    cv::Mat canny;
+    cv::inRange(img, cv::Scalar(0, 70, 60), cv::Scalar(10, 255, 255), mask1);
+    cv::inRange(img, cv::Scalar(170, 70, 60), cv::Scalar(180, 255, 255), mask2);
+    cv::bitwise_or(mask1, mask2, maskRed);
 
-    hog.detectMultiScale(img, found, weights, 0.0, cv::Size(16, 16));
+    cv::Canny(maskRed, canny, 100, 255);
 
-    for (size_t i = 0; i < found.size(); ++i) {
-        cv::Rect r = found[i];
-        cv::rectangle(img, r, cv::Scalar(255, 0, 0), 3);
-        std::ostringstream buf;
-        buf << weights[i];
-        cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 0, 0));
+    cv::Mat kernel = cv::Mat::ones(cv::Size(5,5), CV_8U);
+    cv::dilate(canny, canny, kernel);
+
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+
+    cv::findContours(canny, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+
+    for(auto iter = contours.begin(); iter != contours.end(); ++iter) {
+        if (cv::contourArea(*iter) > 500) {
+            double peri = cv::arcLength(*iter, true);
+            std::vector<cv::Point> approx;
+            cv::approxPolyDP(*iter, approx, .03 * peri, true);
+            if (approx.size() == 8 || approx.size() == 3) {
+                std::cout << approx.size() << std::endl;
+                cv::Rect bounds = cv::boundingRect(approx);
+                found.push_back(bounds);
+                cv::rectangle(response, bounds, cv::Scalar(255,0,0), 3);
+            }
+        }
     }
-    cv::cvtColor(img, img, cv::COLOR_GRAY2BGRA);
+
+    // Searches the yellow space
+    cv::Mat maskYel;
+    cv::inRange(img, cv::Scalar(20, 100, 100), cv::Scalar(30, 255, 255), maskYel);
+    
+    cv::Canny(maskYel, canny, 100, 255);
+
+    cv::dilate(canny, canny, kernel);
+
+    cv::findContours(canny, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+    for(auto iter = contours.begin(); iter != contours.end(); ++iter) {
+        if (cv::contourArea(*iter) > 250) {
+            double peri = cv::arcLength(*iter, true);
+            std::vector<cv::Point> approx;
+            cv::approxPolyDP(*iter, approx, .03 * peri, true);
+            if (approx.size() == 4 || approx.size() == 5) {
+                std::cout << approx.size() << std::endl;
+                cv::Rect bounds = cv::boundingRect(approx);
+                found.push_back(bounds);
+                cv::rectangle(response, bounds, cv::Scalar(255,0,0), 3);
+            }
+        }
+    }
+
+    cv::Mat maskWhi;
+    cv::inRange(img, cv::Scalar(0, 0, 255), cv::Scalar(255, 255, 255), maskYel);
+    
+    cv::Canny(maskWhi, canny, 100, 255);
+
+    cv::dilate(canny, canny, kernel);
+
+    cv::findContours(canny, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+    for(auto iter = contours.begin(); iter != contours.end(); ++iter) {
+        if (cv::contourArea(*iter) > 250) {
+            double peri = cv::arcLength(*iter, true);
+            std::vector<cv::Point> approx;
+            cv::approxPolyDP(*iter, approx, .03 * peri, true);
+            if (approx.size() == 4) {
+                std::cout << approx.size() << std::endl;
+                cv::Rect bounds = cv::boundingRect(approx);
+                found.push_back(bounds);
+                cv::rectangle(response, bounds, cv::Scalar(255,0,0), 3);
+            }
+        }
+    }
 
     ass::SignTrackingResult res;
     res.result = img;
@@ -95,7 +152,11 @@ int main() {
     ass::SignTracker tracker;
     cv::Mat img = cv::imread("stop.png", cv::IMREAD_COLOR);
     cv::Mat copy;
-    std::cout << "Searching for signs" << std::endl;
     copy = tracker.trackSigns(img);
-    cv::imwrite("test.png", copy);
+    cv::imwrite("stoptest.png", copy);
+
+    std::cout << "test 2" << std::endl;
+    img = cv::imread("yield.png", cv::IMREAD_COLOR);
+    img = tracker.trackSigns(img);
+    cv::imwrite("yieldTest.png", img);
 }

@@ -1,6 +1,0 @@
-Supported signs:
-    - stop sign (red octogon)
-    - yield sign (white triangle with red border)
-    - speed limit sign (white rectangle)
-    - School zone signs (yellow irregular 5 sided polygon)
-    - Pedestrian signs (yellow diamond with black person in middle)

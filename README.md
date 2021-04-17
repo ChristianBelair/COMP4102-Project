@@ -15,11 +15,11 @@ The Automotive Safety Suite (ASS) is a collection of safety features which try t
 
 ### Program Instructions
 1. Run "./AutomotiveSafetySuite" in the "src/" directory to run the executable
-  * **NOTE** In the event an internal error occurs after launching the application you can click the stop button in the lower right and hit play again to load the default camera again
+    * **NOTE:** In the event an internal error occurs after launching the application you can click the stop button in the lower right and hit play again to load the default camera again
 2. Click on the "Open File" button in the bottom left
 3. Select a video file from your computer
 4. While the driver view (Top video feed of default camera device) is running, hit the play button next to the "Open File" button.
 5. The video should start playing in greyscale with a text label saying either "Paying Attention" or "Distracted"
 6. Watch the video and if any pedestrians of road signs are identified then look at them
-  1. Look at the left, center, or right regions of the video where there are the most boxes to be considered "Paying Attention"
-  2. Look away from left, center, or right regions of the video where there are the most boxes to be considered "Distracted"
+    1. Look at the left, center, or right regions of the video where there are the most boxes to be considered "Paying Attention"
+    2. Look away from left, center, or right regions of the video where there are the most boxes to be considered "Distracted"

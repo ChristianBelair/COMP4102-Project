@@ -57,7 +57,7 @@ set(PROJECT_SOURCES
         ${EYETRACK_SRC}
         ${EYETRACK_LIBS}
         ${PEDTRACK_SRC}
-        ${SIGNTACK_SRC}
+        ${SIGNTRACK_SRC}
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS GUI)

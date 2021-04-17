@@ -147,7 +147,7 @@ ass::SignTrackingResult ass::SignTracker::SignTrackingPipeline(cv::Mat frame) {
     res.signRegions = found;
     return res;
 }
-
+/*
 int main() {
     ass::SignTracker tracker;
     cv::Mat img = cv::imread("stop.png", cv::IMREAD_COLOR);
@@ -160,3 +160,4 @@ int main() {
     img = tracker.trackSigns(img);
     cv::imwrite("yieldTest.png", img);
 }
+*/

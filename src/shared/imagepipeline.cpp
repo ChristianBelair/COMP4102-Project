@@ -47,15 +47,24 @@ namespace ass {
         }
         else {
             //std::cout << "PedTrackingPipeline tick " << std::endl;
-            cv::cvtColor(mat, mat, cv::COLOR_BGRA2GRAY);
+            cv::Mat temp2;
             outMat.create(mat.size(), mat.type());
-            mat.copyTo(outMat);
-            cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
             cv::resize(outMat, outMat, cv::Size(800,600));
-
-            PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
             SignTrackingResult signRes = signTracker.SignTrackingPipeline(outMat);
-            outMat = res.result;
+            cv::cvtColor(mat, mat, cv::COLOR_BGRA2GRAY);
+            temp2.create(mat.size(), mat.type());
+            mat.copyTo(temp2);
+            cv::cvtColor(temp2, temp2, cv::COLOR_GRAY2BGRA);
+            cv::resize(temp2, temp2, cv::Size(800,600));
+
+            PedTrackingResult res = pedTracker.PedTrackingPipeline(temp2);
+            
+            for(auto iter = signRes.signRegions.begin(); iter != signRes.signRegions.end(); ++iter) {
+                cv::rectangle(outMat, *iter, cv::Scalar(255,0,0), 3);
+            }
+            for(auto iter = res.pedRegions.begin(); iter != res.pedRegions.end(); ++iter) {
+                cv::rectangle(outMat, *iter, cv::Scalar(0,0,255), 3);
+            }
 
             int eyeState = sharedState.GetEyeTrackingState();
             int count = 0;

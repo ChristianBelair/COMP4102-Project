@@ -22,7 +22,7 @@ def hog(img):
 def getTrainingData():
     data = []
     labels = []
-    for i in range(0, 1):
+    for i in range(0, 12):
         print("\tloading set " + str(i))
         with open("trainingData/signData/vid" + str(i) + "/frameAnnotations.csv") as f: 
             reader = csv.reader(f, delimiter=';')
@@ -33,7 +33,7 @@ def getTrainingData():
                 ho = hog(cropped)
                 data.append(ho)
                 labels.append(1)
-    """
+
     print("\tloading negative set")
     for i in range(0, 2000):
         img = cv.imread("trainingData/signData/negatives/negativePics/nosign" + str(i).zfill(5) + ".png", cv.IMREAD_GRAYSCALE)
@@ -43,15 +43,12 @@ def getTrainingData():
         ho = hog(cropped)
         data.append(ho)
         labels.append(0)
-    """
     
     return data, labels
 
 
 print("Loading data")
 data, labels = getTrainingData()
-
-print(len(data[0]))
 
 data = np.float32(data)
 labels = np.array(labels)

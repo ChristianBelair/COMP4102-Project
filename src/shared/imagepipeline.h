@@ -7,6 +7,7 @@
 #include "EyeTracking/EyeTracking.h"
 #include "PedTracking/PedTracking.h"
 #include "shared/eyetrackingstate.h"
+#include "SignTracking/SignTracking.h"
 
 namespace ass {
     class ImagePipeline
@@ -20,6 +21,7 @@ namespace ass {
         EyeTracking eyeTracker;
         PedTracking pedTracker;
         EyeTrackingState sharedState;
+        SignTracker signTracker;
     };
 }
 

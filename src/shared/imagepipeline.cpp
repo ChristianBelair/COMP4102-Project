@@ -47,17 +47,23 @@ namespace ass {
             cv::putText(outMat, sharedState.GetEyeTrackingStateString(), cv::Point(20, 80), cv::FONT_HERSHEY_PLAIN, 2.0, cv::Scalar(0,64,255));
         }
         else {
+            cv::Mat temp = mat.clone();
             //std::cout << "PedTrackingPipeline tick " << std::endl;
-            // Convert the frame Mat into the accepted input type for applying the HOG descriptor
             cv::cvtColor(mat, mat, cv::COLOR_BGRA2GRAY);
             outMat.create(mat.size(), mat.type());
             mat.copyTo(outMat);
             cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
             cv::resize(outMat, outMat, cv::Size(800,600));
+            cv::resize(temp, temp, cv::Size(800,600));
 
+            SignTrackingResult signRes = signTracker.SignTrackingPipeline(temp);
             // Perform Pedestrian Tracking
             PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
             outMat = res.result;
+
+            for(auto iter = signRes.signRegions.begin(); iter != signRes.signRegions.end(); ++iter) {
+                cv::rectangle(outMat, *iter, cv::Scalar(255,0,0), 3);
+            }
 
             // Get the current eye state
             int eyeState = sharedState.GetEyeTrackingState();

@@ -12,6 +12,7 @@
 #include <opencv2/objdetect.hpp>
 
 namespace ass {
+    // Container class for storing pedestrian tracking results
     class PedTrackingResult {
         public:
             cv::Mat result;
@@ -24,8 +25,6 @@ namespace ass {
             void VideoTest();
             void VideoTest(int cameraNumber);
             void VideoTest(std::string video);
-            void TrackPeds();
-            void TrackPeds(int cameraNumber);
             PedTrackingResult PedTrackingPipeline(cv::Mat frame);
     };
 }

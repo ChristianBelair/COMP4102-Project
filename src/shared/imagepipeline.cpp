@@ -11,6 +11,7 @@ namespace ass {
         cv::Mat mat = QtOcv::image2Mat_shared(src);
         cv::Mat outMat;
 
+        // Checks to see if the view flag for the driver view was set
         if (viewFlag) {
             //std::cout << "EyeTrackingPipeline tick " << std::endl;
             // Do something with the mat, like make it grayscale
@@ -47,44 +48,57 @@ namespace ass {
         }
         else {
             //std::cout << "PedTrackingPipeline tick " << std::endl;
+            // Convert the frame Mat into the accepted input type for applying the HOG descriptor
             cv::cvtColor(mat, mat, cv::COLOR_BGRA2GRAY);
             outMat.create(mat.size(), mat.type());
             mat.copyTo(outMat);
             cv::cvtColor(outMat, outMat, cv::COLOR_GRAY2BGRA);
             cv::resize(outMat, outMat, cv::Size(800,600));
 
+            // Perform Pedestrian Tracking
             PedTrackingResult res = pedTracker.PedTrackingPipeline(outMat);
             outMat = res.result;
 
+            // Get the current eye state
             int eyeState = sharedState.GetEyeTrackingState();
             int count = 0;
 
+            // Iterate through all found pedestrian objects
             for (int i = 0; i < res.pedRegions.size(); ++i) {
+                // Calculate the center of the pedestrian object's width
                 int reg_center = res.pedRegions[i].x + (res.pedRegions[i].width / 2);
+                // Initialize object position as in center third of the frame
                 int pedState = 0;
 
-                if (reg_center < (int)(outMat.cols * 0.4)) {
+                // Checks if the width center is in the left or right third of the frame
+                if (reg_center < (int)(outMat.cols / 3)) {
                     pedState = -1;
                 }
-                else if (reg_center > (int)(outMat.cols * 0.6)) {
+                else if (reg_center > (int)((outMat.cols / 3) * 2)) {
                     pedState = 1;
                 }
 
+                // Check if pedestrian state matches eye state
                 if (pedState == eyeState) {
                     ++count;
                 }
             }
 
+            // Initialize empty response string
             std::string response = "";
-            if (count >= res.pedRegions.size()) {
+
+            // Checks to see if at least one third of total pedestrian objects are being looked at
+            if (count >= (int)(res.pedRegions.size() / 3)) {
                 response += "Paying Attention";
             }
             else {
                 response += "Distracted";
             }
 
+            // Resize frame Mat to original size
             cv::resize(outMat, outMat, mat.size());
 
+            // Dispalys response label to frame
             cv::putText(outMat, response, cv::Point(20, 80), cv::FONT_HERSHEY_PLAIN, 2.0, cv::Scalar(0,64,255));
         }
 

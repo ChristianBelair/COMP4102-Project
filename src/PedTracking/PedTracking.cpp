@@ -24,7 +24,8 @@ void ass::PedTracking::VideoTest(int camera) {
         // Takes in a frame from the camera feed and displays it
         cv::Mat frame;
         cap >> frame;
-        cv::imshow("u", frame);
+        PedTrackingResult res = PedTrackingPipeline(frame);
+        cv::imshow("u", res.result);
 
         // Exits the loop when user quits
         if( cv::waitKey(1) == 27 || cv::waitKey(1) == 'q' ) break;

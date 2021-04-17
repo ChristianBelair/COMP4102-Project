@@ -9,7 +9,7 @@
 //     }
 
 //     if (vFile == "") {
-//         pedTracker.TrackPeds();
+//         pedTracker.VideoTest();
 //     }
 //     else {
 //         pedTracker.VideoTest(vFile);

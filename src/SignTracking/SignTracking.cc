@@ -61,6 +61,36 @@ bool ass::SignTracker::exists(const std::string name) {
     return (stat (name.c_str(), &buffer) == 0); 
 }
 
+ass::SignTrackingResult ass::SignTracker::SignTrackingPipeline(cv::Mat frame) {
+    cv::HOGDescriptor hog;
+    hog.load("sign_detector.yml");
+
+    cv::Mat img = frame.clone();
+
+    std::vector<cv::Rect> found;
+    std::vector<double> weights;
+
+    cv::cvtColor(img, img, cv::COLOR_BGRA2GRAY);
+    std::cout << "img.type() = " << img.type() << std::endl;
+    // if (img)
+
+    hog.detectMultiScale(img, found, weights, 0.0, cv::Size(16, 16));
+
+    for (size_t i = 0; i < found.size(); ++i) {
+        cv::Rect r = found[i];
+        cv::rectangle(img, r, cv::Scalar(255, 0, 0), 3);
+        std::ostringstream buf;
+        buf << weights[i];
+        cv::putText(img, buf.str(), cv::Point(found[i].x, found[i].y + 50), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 0, 0));
+    }
+    cv::cvtColor(img, img, cv::COLOR_GRAY2BGRA);
+
+    ass::SignTrackingResult res;
+    res.result = img;
+    res.signRegions = found;
+    return res;
+}
+
 int main() {
     ass::SignTracker tracker;
     cv::Mat img = cv::imread("stop.png", cv::IMREAD_COLOR);

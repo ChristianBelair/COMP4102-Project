@@ -15,11 +15,19 @@
 #include "opencv4/opencv2/ml.hpp"
 
 namespace ass {
+    class SignTrackingResult {
+        public:
+            cv::Mat result;
+            std::vector<cv::Rect> signRegions;
+    };
+    
     class SignTracker {
         public:
             SignTracker();
             void trackSigns(int);
             cv::Mat trackSigns(const cv::Mat);
+            SignTrackingResult SignTrackingPipeline(cv::Mat frame);
+
         private:
             bool exists(const std::string);
     };

@@ -48,3 +48,34 @@ The original testing results when testing with a laptop camera were a little lac
 Later, testing started to use video files to be more in line with how we wanted to achieve this project. The video used was of a motorcyclist who had a camera attached to their helmet and was riding around while driving by careless pedestrians. When viewing the results of the video file, the accuracy of the HOG descriptor was much more in line with what we had hoped. Most if not all of the pedestrians were identified when within an acceptable range. Whenever the pedestrian tracking component produced a false negative, the cases that generated such errors were those where either a pedestrian was too far from or too close to the camera, and whenever the pedestrian was partially occluded. Both of these conditions are not out of the ordinary since being to close to the camera results in some occlusion since the pedestrian will be partially in frame. When to far away, the gradients in the HOG descriptor become harder to determine if they are human-shaped objects which is normal in nature. Partial occlusion of a pedestrian in the frame is also normal as parts of the gradient data is lost due to occlusion.
 
 \subsection{Road Sign Tracking}
+
+The contour edge counting method implemented is very prone to false positives.
+This is because, for example, any red shape with eight edges would be seen as a stop sign.
+Additionally, this method is highly dependent on optimal conditions.
+Were environment or camera inaccuracies to significant offset the color of signs, they would fail to be detected as it's looking for specific color ranges.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{.49\textwidth}
+      \centering
+      \label{stop Sign}
+      \includegraphics[width=\textwidth]{figures/stoptest.png}
+      \caption{The method used is prone to failing to identify signs}
+    \end{subfigure}
+    \begin{subfigure}[b]{.49\textwidth}
+      \includegraphics[width=\textwidth]{figures/yieldTest.png}
+      \caption{The edge counting method is prone to false positives}
+    \end{subfigure}
+\end{figure}
+
+The sign tracking was intitially going to be handled by training an SVM and utilizing a HOG.
+This attempt ultimately failed due to the limitations on hand as well as limitations of machine learning.
+The data sets obtained did not have enough variety for most signs, meaning it would be a poor detector of individual signs.
+Additionally, the variety of road signs prevented the model from being trained as a single class.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=.3]{figures/badML.png}
+  \caption{The single-class SVM model was highly inaccurate}
+\end{figure}
+
+As a result of the limitations of SVM and the datasets, the model could not achieve >30\% accuracy and ultimately had to be dropped in favor of edge counting.

@@ -10,3 +10,13 @@ With the returned vector we first calculate the centre of the width for each \em
 
 \subsection{Road Sign Tracking}
 
+The road sign tracking is achieved through a single function which takes in a \emph{cv::Mat} that must be the type ``CV\_8U4C'', and returns a \emph{SignTrackingResult} containing a \emph{cv::Mat} with the rectangles drawn on and a \emph{std::vector<cv::Rect>}.
+
+The road tracking is performed by getting the reds, yellows, and whites within the image. 
+This is done by converting the image to HSV and masking off it's specific value ranges.
+Then, a canny edge detector is performed on each mask, with a dilation performed on the result to make the edges easier to detect.
+On the dilated result, \emph{cv::findContours()} is performed to find all continious borders in the image.
+With the contours and their hierarchy find, the approximate polygonal curves in the image are found, where the edges are then counted.
+If the edges count match a sign's count in it's respective color, the shape is approved and is included in the return.
+
+The results of the sign tracking could be implemented in the same manner as the pedestrian, but the number of false positives made it a poor addition to detecting alertness.

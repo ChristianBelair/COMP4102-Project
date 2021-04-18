@@ -23,3 +23,9 @@ The Automotive Safety Suite (ASS) is a collection of safety features which try t
 6. Watch the video and if any pedestrians of road signs are identified then look at them
     1. Look at the left, center, or right regions of the video where there are the most boxes to be considered "Paying Attention"
     2. Look away from left, center, or right regions of the video where there are the most boxes to be considered "Distracted"
+
+### Project Details
+To see details about this project, [click me](https://github.com/ChristianBelair/COMP4102-Project/blob/master/docs/01-Proposal/COMP4102-Proposal.pdf)
+
+### Project Final Report
+To see details about the result of the project, [click me](https://github.com/ChristianBelair/COMP4102-Project/blob/master/docs/02-FinalWriteUp/FinalWriteUp.pdf)
